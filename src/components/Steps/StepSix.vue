@@ -1,6 +1,7 @@
 <template>
   <section class="card-section form-page">
-      <form class="w-full text-lg pb-10 " @submit.prevent="onSubmit">
+    <ValidationObserver v-slot="{ handleSubmit }">
+      <form class="w-full text-lg pb-10 ">
         <div class="bg-white w-100 inner-section" id="q22">
           <div class="container">
             <div class="row" v-if="member">
@@ -529,12 +530,12 @@
                   Your Progress
                 </h4>
                 <Progress :width="width" />
-                <button class="btn btn-primary mr-md-2 mb-2" @click="goBack">
+                <button class="btn btn-primary mr-md-2 mb-2" @click.prevent="goBack">
                   <i
                     class="fa fa-angle-left ml-2"
                   /> Back
                 </button>
-                <button class="btn btn-primary mr-md-2 mb-2" @click="onSubmit">
+                <button class="btn btn-primary mr-md-2 mb-2" @click.prevent="handleSubmit(onSubmit)">
                   Next <i
                     class="fa fa-angle-right ml-2"
                   />
@@ -546,6 +547,7 @@
           </div><!-- container -->
         </div>
       </form>
+    </ValidationObserver>
   </section>
 </template>
 

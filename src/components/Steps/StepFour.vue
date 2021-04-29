@@ -1,6 +1,7 @@
 <template>
   <section class="card-section form-page">
-      <form class="w-full text-lg pb-10 " @submit.prevent="goToStepThree">
+    <ValidationObserver v-slot="{ handleSubmit }">
+      <form class="w-full text-lg pb-10 ">
         <div class="bg-white w-100 inner-section" id="q11">
           <div class="container">
             <div class="row">
@@ -14,7 +15,14 @@
                 <!-- custom check container -->
                 <div v-for="item in support" :key="item.id" class="checkbox">
                   <div>
-                    <input :id="item.id" v-model="policies" type="checkbox" :value="item.id">
+                    <input
+                      :id="item.id"
+                      type="checkbox"
+                      :value="item.id"
+                      v-model="item.checked"
+                      :checked="item.checked"
+                      @change="inputCheckerSupport"
+                    >
                     <label :for="item.id" class="col-form-label">{{ item.text }}</label>
                   </div>
                 </div>
@@ -188,12 +196,12 @@
                   Your Progress
                 </h4>
                 <Progress :width="width" />
-                <button class="btn btn-primary mr-md-2 mb-2" @click="goBack">
+                <button class="btn btn-primary mr-md-2 mb-2" @click.prevent="goBack">
                   <i
                     class="fa fa-angle-left ml-2"
                   /> Back
                 </button>
-                <button class="btn btn-primary mr-md-2 mb-2" @click="onSubmit">
+                <button class="btn btn-primary mr-md-2 mb-2" @click.prevent="handleSubmit(onSubmit)">
                   Next <i
                     class="fa fa-angle-right ml-2"
                   />
@@ -205,6 +213,7 @@
           </div><!-- container -->
         </div>
       </form>
+    </ValidationObserver>
   </section>
 </template>
 
@@ -228,19 +237,27 @@ export default {
       support: [
         {
           id: 'Support_NSW_Membership',
-          text: 'Become a NSW Party Member'
+          text: 'Become a NSW Party Member',
+          disabled: false,
+          checked: false
         },
         {
           id: 'Support_Volunteer',
-          text: 'Volunteer at the next Federal and/or State Election'
+          text: 'Volunteer at the next Federal and/or State Election',
+          disabled: false,
+          checked: false
         },
         {
           id: 'Support_Corporate_Events',
-          text: "Attend Corporate events with our NSW State and Federal MP's"
+          text: "Attend Corporate events with our NSW State and Federal MP's",
+          disabled: false,
+          checked: false
         },
         {
           id: 'Support_Donation',
-          text: 'Supporting Party beliefs through a donation or gift'
+          text: 'Supporting Party beliefs through a donation or gift',
+          disabled: false,
+          checked: false
         }
       ],
       gift_will_model: '',
@@ -334,6 +351,15 @@ export default {
     })
   },
   methods: {
+    inputCheckerSupport () {
+      // this.reasons = this.reasons_to_donate.filter(donate => donate.checked)
+      this.support.forEach((el) => {
+        if (el.id === 'Support_NSW_Membership') this.answer_step4.Support_NSW_Membership  = el.checked
+        if (el.id === 'Support_Volunteer') this.answer_step4.Support_Volunteer = el.checked
+        if (el.id === 'Support_Corporate_Events') this.answer_step4.Support_Corporate_Events = el.checked
+        if (el.id === 'Support_Donation') this.answer_step4.Support_Donation = el.checked
+      })
+    },
     async getCurrentFields () {
       try {
         this.loading = this.$loading.show()

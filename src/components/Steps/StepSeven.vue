@@ -1,6 +1,7 @@
 <template>
   <section class="card-section form-page">
-      <form class="w-full text-lg pb-10 " @submit.prevent="submitSurvey">
+    <ValidationObserver v-slot="{ handleSubmit }">
+      <form class="w-full text-lg pb-10 ">
           <div class="bg-white w-100">
             <div class="container">
               <div class="row">
@@ -169,12 +170,12 @@
                 </h6>
                 <h4>Your Progress.</h4>
                 <Progress :width="width" />
-                <button class="btn btn-primary mr-md-2 mb-2" @click="goBack">
+                <button class="btn btn-primary mr-md-2 mb-2" @click.prevent="goBack">
                   <i
                     class="fa fa-angle-left ml-2"
                   /> Back
                 </button>
-                <button class="btn btn-primary mr-md-2 mb-2" @click="submitSurvey">
+                <button class="btn btn-primary mr-md-2 mb-2" @click.prevent="handleSubmit(submitSurvey)">
                   Submit <i
                     class="fa fa-angle-right ml-2"
                   />
@@ -184,6 +185,7 @@
           </div><!-- container -->
         </div>
       </form>
+    </ValidationObserver>
   </section>
 </template>
 

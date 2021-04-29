@@ -1,7 +1,7 @@
 <template>
   <section class="card-section form-page">
     <ValidationObserver v-slot="{ handleSubmit }">
-      <form class="w-full text-lg pb-10 " @submit.prevent="handleSubmit(onSubmit)">
+      <form class="w-full text-lg pb-10 ">
         <div class="bg-white w-100 inner-section" id="q4">
           <div class="container">
             <div class="row">
@@ -171,12 +171,12 @@
                   Your Progress
                 </h4>
                 <Progress :width="width" />
-                <button class="btn btn-primary mr-md-2 mb-2" @click="goBack">
+                <button class="btn btn-primary mr-md-2 mb-2" @click.prevent="goBack">
                   <i
                     class="fa fa-angle-left ml-2"
                   /> Back
                 </button>
-                <button class="btn btn-primary mr-md-2 mb-2" @click="onSubmit">
+                <button class="btn btn-primary mr-md-2 mb-2" @click.prevent="handleSubmit(onSubmit)">
                   Next <i
                     class="fa fa-angle-right ml-2"
                   />
@@ -351,6 +351,9 @@ export default {
       ],
       id: '',
       ck: '',
+      loadingTwo: '',
+      loadingSubmit: '',
+      loadingBack: '',
       answer_step2: {
         State_Policy_Cost_Living: false,
         State_Policy_Environment: false,
@@ -377,8 +380,7 @@ export default {
         Interact_Events: '',
         Interact_Volunteer: '',
         Interact_Newsletter: false,
-        Interact_StrongLiberal: false,
-        loading: ''
+        Interact_StrongLiberal: false
       }
     }
   },
@@ -386,7 +388,6 @@ export default {
     this.id = this.$route.query.id
     this.ck = this.$route.query.ck
     this.getCurrentFields()
-    this.loading.hide()
   },
   computed: {
     ...mapGetters({
@@ -398,12 +399,13 @@ export default {
   methods: {
     async getCurrentFields () {
       try {
-        this.loading = this.$loading.show()
+        this.loadingTwo = this.$loading.show()
         const res = await axios.get('http://dev.nsw.liberal.org.au/LPNSWAPI/SurveyLookup/GetUDFields?id=' + this.id + '&ck=' + this.ck + '&surveyTableName=Survey_Supporter21', {
         headers: {
           Authorization: 'Bearer ' + this.token
         }
         })
+        this.loadingTwo.hide()
         this.$store.commit('setCurrentPage', res.data.Answers.Currentpage)
         this.nsw_policies.map( el => {
           if (el.id === 'State_Policy_Cost_Living') el.checked = res.data.Answers.State_Policy_Cost_Living
@@ -455,13 +457,12 @@ export default {
         this.answer_step2.Interact_Donation = res.data.Answers.Interact_Donation
         this.answer_step2.Interact_Events = res.data.Answers.Interact_Events
         this.answer_step2.Interact_Volunteer = res.data.Answers.Interact_Volunteer
-        
         this.$store.commit('setAnswers', res.data.Answers)
       } catch (error) {
         console.log('error' + error)
         this.$store.commit('setCurrentPage', 1)
       } finally {
-        this.loading.hide()
+        this.loadingTwo.hide()
       }
     },
     inputChecker () {
@@ -506,7 +507,7 @@ export default {
     },
     async onSubmit () {
       try {
-        const load = this.$loading.show()
+        this.loadingSubmit = this.$loading.show()
         this.$store.commit('setProgress', 30)
         const payload = {
           memberid: this.id,
@@ -539,7 +540,6 @@ export default {
           Authorization: 'Bearer ' + this.token
         }
         })
-        load.hide()
         this.$store.commit('setCurrentPage', result.data.Answers.Currentpage)
         this.$store.commit('setAnswers', result.data.Answers)
         window.scrollTo({
@@ -554,12 +554,12 @@ export default {
           behavior: 'smooth'
         })
       } finally {
-        load.hide()
+        this.loadingSubmit.hide()
       }
     },
     async goBack () {
       try {
-        this.loading = this.$loading.show()
+        this.loadingBack = this.$loading.show()
         this.$store.commit('setProgress', 0)
         this.$store.commit('setCurrentPage', 1)
         const payload = {
@@ -595,7 +595,7 @@ export default {
           behavior: 'smooth'
         })
       } finally {
-        this.loading.hide()
+        this.loadingBack.hide()
       }
     }
   },

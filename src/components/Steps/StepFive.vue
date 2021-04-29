@@ -1,6 +1,7 @@
 <template>
   <section class="card-section form-page">
-      <form class="w-full text-lg pb-10 " @submit.prevent="goToStepThree">
+    <ValidationObserver v-slot="{ handleSubmit }">
+      <form class="w-full text-lg pb-10 ">
         <div class="bg-white w-100">
           <div class="container">
             <div class="row">
@@ -57,8 +58,8 @@
                 <div class="row">
                   <div class="col-md-2">
                         <div class="form-group">
-                          <select>
-                      <option value="null" disabled="disabled">Day</option>
+                      <select v-model="answer_step5.DOB">
+                      <option disabled="disabled" value="">Day</option>
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
@@ -96,27 +97,27 @@
 
                   <div class="col-md-2">
                         <div class="form-group">
-                          <select>
+                          <select v-model="answer_step5.DOB_month">
                             <option disabled="disabled" value="">Month</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
+                            <option value="Junuary">Junuary</option>
+                            <option value="February">February</option>
+                            <option value="February">March</option>
+                            <option value="April">April</option>
+                            <option value="April">May</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="Otober">Otober</option>
+                            <option value="November">November</option>
+                            <option value="December">December</option>
                           </select>
                         </div>
                   </div>
 
                   <div class="col-md-2">
                         <div class="form-group">
-                          <select>
+                      <select v-model="answer_step5.DOB_year">
                       <option disabled="disabled" value="">Year</option>
                       <option value="1900">1900</option>
                       <option value="1901">1901</option>
@@ -383,12 +384,12 @@
                   Your Progress
                 </h4>
                 <Progress :width="width" />
-                <button class="btn btn-primary mr-md-2 mb-2" @click="goBack">
+                <button class="btn btn-primary mr-md-2 mb-2" @click.prevent="goBack">
                   <i
                     class="fa fa-angle-left ml-2"
                   /> Back
                 </button>
-                <button class="btn btn-primary mr-md-2 mb-2" @click="onSubmit">
+                <button class="btn btn-primary mr-md-2 mb-2" @click.prevent="handleSubmit(onSubmit)">
                   Next <i
                     class="fa fa-angle-right ml-2"
                   />
@@ -400,6 +401,7 @@
           </div><!-- container -->
         </div>
       </form>
+    </ValidationObserver>
   </section>
 </template>
 
@@ -521,7 +523,8 @@ export default {
       answer_step5: {
         Gender: '',
         DOB: '',
-        DOB_Year_Only: '',
+        DOB_year: '',
+        DOB_month: '',
         Relationship_Status: '',
         Family_Composition: '',
         Work_Status: '',
@@ -560,6 +563,9 @@ export default {
         this.answer_step5.Corporate_Event_Interest = res.data.Answers.Corporate_Event_Interest
         this.answer_step5.Corporate_Event_Company = res.data.Answers.Corporate_Event_Company
         this.answer_step5.Corporate_Event_Title = res.data.Answers.Corporate_Event_Title
+        this.answer_step5.DOB = res.data.Answers.DOB
+        this.answer_step5.DOB_month = res.data.Answers.DOB_month
+        this.answer_step5.DOB_year = res.data.Answers.DOB_year
         this.$store.commit('setAnswers', res.data.Answers)
       } catch (error) {
         console.log('error' + error)
@@ -570,6 +576,7 @@ export default {
     },
     async onSubmit () {
       try {
+        console.log('submit')
         const load = this.$loading.show()
         const payload = {
           memberid: this.id,
@@ -623,6 +630,7 @@ export default {
     },
     async goBack () {
       try {
+        console.log('back')
         this.loading = this.$loading.show()
         const payload = {
           memberid: this.id,
@@ -659,7 +667,6 @@ export default {
         })
       } finally {
         this.loading.hide()
-
       }
     }
   }

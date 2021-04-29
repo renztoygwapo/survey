@@ -119,6 +119,10 @@ header .navbar-toggler {
   padding-right: 0px;
 }
 
+svg {
+  stroke: rgb(7, 174, 235) !important;
+}
+
 /* header .navbar-toggler .navbar-toggler-icon {
   background-image: url(../images/menu-white.svg);
 } */

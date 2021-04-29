@@ -66,7 +66,6 @@ export default {
     await this.getMember()
     await this.getStreetTypes()
     await this.getFields()
-    console.log('current step ' + this.step)
     if(this.step) {
       this.$store.commit('setLoading', false)
     }

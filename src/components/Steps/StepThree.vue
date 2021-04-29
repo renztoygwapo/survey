@@ -1,7 +1,7 @@
 <template>
   <section class="card-section form-page bg-white">
     <ValidationObserver v-slot="{ handleSubmit }">
-      <form class="w-full text-lg pb-10 " @submit.prevent="handleSubmit(onSubmit)">
+      <form class="w-full text-lg pb-10 ">
         <div class="container">
           <div class="row">
             <div class="col-md-12">
@@ -143,12 +143,12 @@
                   Your Progress
                 </h4>
                 <Progress :width="width" />
-                <button class="btn btn-primary mr-md-2 mb-2" @click="goBack">
+                <button class="btn btn-primary mr-md-2 mb-2" @click.prevent="goBack">
                   <i
                     class="fa fa-angle-left ml-2"
                   /> Back
                 </button>
-                <button class="btn btn-primary mr-md-2 mb-2" @click="onSubmit">
+                <button class="btn btn-primary mr-md-2 mb-2" @click.prevent="handleSubmit(onSubmit)">
                   Next <i
                     class="fa fa-angle-right ml-2"
                   />
@@ -303,6 +303,7 @@ export default {
     },
     async onSubmit () {
       try {
+        console.log('submit')
         const load = this.$loading.show()
         const payload = {
           memberid: this.id,
@@ -345,7 +346,6 @@ export default {
         this.$store.commit('setProgress', 45)
       } catch (error) {
         this.$store.commit('setProgress', 45)
-        this.$store.commit('setCurrentPage', 4)
         window.scrollTo({
           top: 10,
           behavior: 'smooth'
@@ -356,6 +356,7 @@ export default {
     },
     async goBack () {
       try {
+        console.log('goback')
         this.loading = this.$loading.show()
         const payload = {
           memberid: this.id,

@@ -484,7 +484,11 @@ export default {
         State_Grow_Economy: '',
         State_Deliver_Clearplan: '',
         State_Issues_Family: '',
-        State_Covid19: ''
+        State_Covid19: '',
+        Fed_Covid19: '',
+        Fed_Issues_Family: '',
+        Fed_Grow_Economy: '',
+        Fed_Deliver_Clearplan: ''
       },
       supports: [],
       nsw_supports: [
@@ -527,12 +531,14 @@ export default {
       ],
       result: null,
       id: '',
-      ck: ''
+      ck: '',
+      loadingSubmit: null
     }
   },
   mounted () {
     this.id = this.$route.query.id
     this.ck = this.$route.query.ck
+    this.getCurrentFields()
   },
   methods: {
     inputChecker () {
@@ -563,7 +569,6 @@ export default {
         }
         })
         this.result = res.data
-        console.log(this.result)
         // this.$store.commit('setMember', res.data)
       } catch (error) {
         console.log('error' + error)
@@ -581,7 +586,7 @@ export default {
     },
     async onSubmit () {
       try {
-        let load = this.$loading.show()
+        const loader = this.$loading.show()
         const payload = {
           memberid: this.id,
           surveyid: this.submitForm.surveyid,
@@ -613,7 +618,7 @@ export default {
           Authorization: 'Bearer ' + this.token
         }
         })
-        load.hide()
+        loader.hide()
         this.$store.commit('setCurrentPage', result.data.Answers.Currentpage)
         this.$store.commit('setAnswers', result.data.Answers)
         window.scrollTo({
@@ -628,45 +633,38 @@ export default {
         })
         this.$store.commit('setCurrentPage', 2)
         this.$store.commit('setProgress', 15)
-      } finally {
-        this.loading.hide()
       }
     },
     async getCurrentFields () {
       try {
-        this.loading = this.$loading.show()
-        const res = await axios.get('http://dev.nsw.liberal.org.au/LPNSWAPI/SurveyLookup/GetUDFields?id=' + this.id + '&ck=' + this.ck + '&surveyTableName=Survey_Supporter21', {
-        headers: {
-          Authorization: 'Bearer ' + this.token
-        }
-        })
-        this.$store.commit('setCurrentPage', res.data.Answers.Currentpage)
+        this.$store.commit('setCurrentPage', this.answers.Currentpage)
         this.nsw_supports.map( el => {
-          if (el.id === 'Support_Beliefs') el.checked = res.data.Answers.Support_Beliefs
-          if (el.id === 'Support_Leadership') el.checked = res.data.Answers.Support_Leadership
-          if (el.id === 'Support_Future') el.checked = res.data.Answers.Support_Future
-          if (el.id === 'Support_Concerned') el.checked = res.data.Answers.Support_Concerned
-          if (el.id === 'Support_Advancement') el.checked = res.data.Answers.Support_Advancement
-          if (el.id === 'Support_Other') el.checked = res.data.Answers.Support_Other
-          if (el.id === 'Support_Other') this.other_support = res.data.Answers.Support_Other
+          if (el.id === 'Support_Beliefs') el.checked = this.answers.Support_Beliefs
+          if (el.id === 'Support_Leadership') el.checked = this.answers.Support_Leadership
+          if (el.id === 'Support_Future') el.checked = this.answers.Support_Future
+          if (el.id === 'Support_Concerned') el.checked = this.answers.Support_Concerned
+          if (el.id === 'Support_Advancement') el.checked = this.answers.Support_Advancement
+          if (el.id === 'Support_Other') el.checked = this.answers.Support_Other
+          if (el.id === 'Support_Other') this.other_support = this.answers.Support_Other
         })
-        this.answer_step1.Support_Beliefs = res.data.Answers.Support_Beliefs
-        this.answer_step1.Support_Leadership = res.data.Answers.Support_Leadership
-        this.answer_step1.Support_Future = res.data.Answers.Support_Future
-        this.answer_step1.Support_Concerned = res.data.Answers.Support_Concerned
-        this.answer_step1.Support_Advancement = res.data.Answers.Support_Advancement
-        this.answer_step1.Support_Other = res.data.Answers.Support_Other
-        this.answer_step1.Support_OtherDetails = res.data.Answers.Support_OtherDetails
-        this.answer_step1.State_Grow_Economy = res.data.Answers.State_Grow_Economy
-        this.answer_step1.State_Deliver_Clearplan = res.data.Answers.State_Deliver_Clearplan
-        this.answer_step1.State_Issues_Family = res.data.Answers.State_Issues_Family
-        this.answer_step1.State_Covid19 = res.data.Answers.State_Covid19
-        this.$store.commit('setAnswers', res.data.Answers)
+        this.answer_step1.Support_Beliefs = this.answers.Support_Beliefs
+        this.answer_step1.Support_Leadership = this.answers.Support_Leadership
+        this.answer_step1.Support_Future = this.answers.Support_Future
+        this.answer_step1.Support_Concerned = this.answers.Support_Concerned
+        this.answer_step1.Support_Advancement = this.answers.Support_Advancement
+        this.answer_step1.Support_Other = this.answers.Support_Other
+        this.answer_step1.Support_OtherDetails = this.answers.Support_OtherDetails
+        this.answer_step1.State_Grow_Economy = this.answers.State_Grow_Economy
+        this.answer_step1.State_Deliver_Clearplan = this.answers.State_Deliver_Clearplan
+        this.answer_step1.State_Issues_Family = this.answers.State_Issues_Family
+        this.answer_step1.State_Covid19 = this.answers.State_Covid19
+        this.answer_step1.Fed_Covid19 = this.answers.Fed_Covid19
+        this.answer_step1.Fed_Issues_Family = this.answers.Fed_Issues_Family
+        this.answer_step1.Fed_Grow_Economy = this.answers.Fed_Grow_Economy
+        this.answer_step1.Fed_Deliver_Clearplan = this.answers.Fed_Deliver_Clearplan
       } catch (error) {
         console.log('error' + error)
         this.$store.commit('setCurrentPage', 1)
-      } finally {
-        this.loading.hide()
       }
     }
   },
