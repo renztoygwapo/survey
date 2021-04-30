@@ -392,7 +392,7 @@ export default {
         this.answer_step4.GIW_Ease = res.data.Answers.GIW_Ease
         this.answer_step4.GIW_Enough_Resource = res.data.Answers.GIW_Enough_Resource
         this.answer_step4.GIW_Thanks = res.data.Answers.GIW_Thanks
-
+        this.inputChecker()
         this.$store.commit('setAnswers', res.data.Answers)
       } catch (error) {
         this.$store.commit('setCurrentPage', 1)
@@ -401,17 +401,20 @@ export default {
       }
     },
     inputChecker () {
-      this.new_resources_model = this.new_resources.filter(resources => resources.checked)
+      // this.new_resources_model = this.new_resources.filter(resources => resources.checked)
       // check the other field is tick then show
-      if (this.new_resources_model.some(resource => resource.text === 'None of the above')) {
-        this.new_resources.forEach((resource) => {
-          if (resource.checked === false) { resource.disabled = true }
-        })
-      } else {
-        this.new_resources.forEach((box) => {
-          if (box.checked === false) { box.disabled = false }
-        })
-      }
+      this.new_resources.forEach((el) => {
+        if( el.id === 'GIW_No_Resource' && el.checked) {
+          this.new_resources.forEach( el => {
+            el.checked = false
+            el.disabled = true
+          })
+          el.checked = true
+          el.disabled = false
+        } else {
+          this.new_resources.forEach( el => el.disabled = false)
+        }
+      })
     },
     inputCheckerGiftWill () {
       // check the other field is tick then show

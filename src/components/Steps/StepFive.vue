@@ -9,9 +9,6 @@
                 <h2 class="mb-3 ">
                   ABOUT YOU
                 </h2>
-                <p>
-                  Please select one preference
-                </p>
               </div><!-- col-md-12 -->
             </div><!-- row -->
           </div><!-- container -->
@@ -99,7 +96,7 @@
                         <div class="form-group">
                           <select v-model="answer_step5.DOB_month">
                             <option disabled="disabled" value="">Month</option>
-                            <option value="Junuary">Junuary</option>
+                            <option value="January">January</option>
                             <option value="February">February</option>
                             <option value="February">March</option>
                             <option value="April">April</option>
@@ -108,7 +105,7 @@
                             <option value="July">July</option>
                             <option value="August">August</option>
                             <option value="September">September</option>
-                            <option value="Otober">Otober</option>
+                            <option value="October">October</option>
                             <option value="November">November</option>
                             <option value="December">December</option>
                           </select>

@@ -69,6 +69,8 @@ export default {
     if(this.step) {
       this.$store.commit('setLoading', false)
     }
+    // progress bar re-initiate
+    this.progressBarWidth()
   },
   methods: {
     async getToken () {
@@ -135,6 +137,10 @@ export default {
       } finally {
         this.loading.hide()
       }
+    },
+    progressBarWidth () {
+      const payload = (this.step - 1) * 15
+      this.$store.commit('setProgress', payload)
     }
   }
 }

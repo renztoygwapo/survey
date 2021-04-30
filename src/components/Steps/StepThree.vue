@@ -356,7 +356,6 @@ export default {
     },
     async goBack () {
       try {
-        console.log('goback')
         this.loading = this.$loading.show()
         const payload = {
           memberid: this.id,
