@@ -26,7 +26,8 @@ export default new Vuex.Store({
     },
     answers: {},
     token: '',
-    donation: null
+    donation: null,
+    donation_settings: null
   },
   getters: {
     step: state => state.step,
@@ -40,9 +41,13 @@ export default new Vuex.Store({
     answers: state => state.answers,
     submitForm: state => state.submitForm,
     token: state => state.token,
-    donation: state => state.donation
+    donation: state => state.donation,
+    donation_settings: state => state.donation_settings
   },
   mutations: {
+    setDonationSettings (state, payload) {
+      state.donation_settings = payload
+    },
     setProgress (state, payload) {
       state.width = payload
     },

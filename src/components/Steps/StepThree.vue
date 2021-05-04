@@ -303,7 +303,6 @@ export default {
     },
     async onSubmit () {
       try {
-        console.log('submit')
         const load = this.$loading.show()
         const payload = {
           memberid: this.id,

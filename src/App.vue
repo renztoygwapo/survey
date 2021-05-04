@@ -59,6 +59,17 @@ export default {
     })
   },
   async mounted () {
+    // const settings = {
+    //   campaigncode: campaigncode,
+    //   appealcode: appealcode,
+    //   fundcode: fundcode,
+    //   distributioncode: distributioncode,
+    //   requesttype: requesttype,
+    //   amexcc: amexcc,
+    //   visacc: visacc,
+    //   mastercardcc: mastercardcc
+    // }
+    // this.$store.commit('setDonationSettings', settings)
     this.loading = this.$loading.show()
     this.id = this.$route.query.id
     this.ck = this.$route.query.ck

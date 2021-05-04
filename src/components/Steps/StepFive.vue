@@ -573,7 +573,6 @@ export default {
     },
     async onSubmit () {
       try {
-        console.log('submit')
         const load = this.$loading.show()
         const payload = {
           memberid: this.id,
@@ -627,7 +626,6 @@ export default {
     },
     async goBack () {
       try {
-        console.log('back')
         this.loading = this.$loading.show()
         const payload = {
           memberid: this.id,

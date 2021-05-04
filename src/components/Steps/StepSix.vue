@@ -681,6 +681,7 @@ export default {
       id: '',
       ck: '',
       loading: '',
+      loadingSubmit: false,
       answer_step6: {
         is_same_postal: false,
         Confirm_Mission: false,
@@ -765,7 +766,7 @@ export default {
     },
     async onSubmit () {
       try {
-        const load = this.$loading.show()
+        this.loadingSubmit = this.$loading.show()
         const address = {
           FirstName: this.member.FirstName,
           LastName: this.member.LastName,
@@ -778,6 +779,9 @@ export default {
           Authorization: 'Bearer ' + this.token
         }
         })
+        if(postAddress.data.Message === 'Address can not be validated') {
+          throw new Error(postAddress.data.Message)
+        }
         const memberPayloads = {
           memberid: this.member.memberid,
           Prefix: this.member.Prefix, 
@@ -843,7 +847,7 @@ export default {
           Authorization: 'Bearer ' + this.token
         }
         })
-        load.hide()
+        loadingSubmit.hide()
         this.$store.commit('setCurrentPage', result.data.Answers.Currentpage)
         this.$store.commit('setAnswers', result.data.Answers)
         window.scrollTo({
@@ -852,12 +856,26 @@ export default {
         })
         this.$store.commit('setProgress', 90)
       } catch (error) {
+        this.$toast.error(error.message, {
+          position: "top-right",
+          timeout: 5000,
+          closeOnClick: true,
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          draggable: true,
+          draggablePercent: 0.6,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: true,
+          rtl: false
+        })
         window.scrollTo({
           top: 10,
           behavior: 'smooth'
         })
       } finally {
-        this.loading.hide()
+        this.loadingSubmit.hide()
       }
     },
     async goBack () {

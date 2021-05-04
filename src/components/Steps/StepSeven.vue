@@ -75,18 +75,18 @@
                     <div class="form-group">
                       <label>Expiration Month</label>
                       <select id="exp_month" type="text" placeholder="Expiration Month" v-model="answer_step7.donation.expire_month">
-                        <option value="">January</option>
-                        <option value="">February</option>
-                        <option value="">March</option>
-                        <option value="">April</option>
-                        <option value="">May</option>
-                        <option value="">June</option>
-                        <option value="">July</option>
-                        <option value="">August</option>
-                        <option value="">September</option>
-                        <option value="">October</option>
-                        <option value="">November</option>
-                        <option value="">December</option>
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
                       </select>
                     </div>
                   </div>
@@ -94,17 +94,17 @@
                     <div class="form-group">
                       <label>Expiration Year</label>
                       <select id="exp_month" type="text" placeholder="Expiration Month" v-model="answer_step7.donation.expire_year">
-                        <option value="">2021</option>
-                        <option value="">2022</option>
-                        <option value="">2023</option>
-                        <option value="">2024</option>
-                        <option value="">2025</option>
-                        <option value="">2026</option>
-                        <option value="">2027</option>
-                        <option value="">2028</option>
-                        <option value="">2029</option>
-                        <option value="">2030</option>
-                        <option value="">2031</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                        <option value="2027">2027</option>
+                        <option value="2028">2028</option>
+                        <option value="2029">2029</option>
+                        <option value="2030">2030</option>
+                        <option value="2031">2031</option>
                       </select>
                     </div>
                   </div>
@@ -276,13 +276,42 @@ export default {
     ...mapGetters({
       width: 'width',
       submitForm: 'submitForm',
-      token: 'token'
+      token: 'token',
+      donation_settings: 'donation_settings'
     })
   },
   methods: {
     async submitSurvey () {
       try {
          this.submitLoading = this.$loading.show()
+        
+        const donationPayload = {
+          memberid: this.id,
+          donation: this.answer_step7.donation,
+          donationsettings: this.donation_settings
+        }
+        const donation_result = await axios.post('http://dev.nsw.liberal.org.au/LPNSWAPI/SurveyLookup/PostSurveyDonate', donationPayload, {
+        headers: {
+          Authorization: 'Bearer ' + this.token
+        }
+        })
+        if(donation_result.data.errors) {
+          throw new Error(donation_result.data.errors[0])
+        }
+        const payload = {
+          memberid: this.id,
+          surveyid: this.submitForm.surveyid,
+          status: 'finished',
+          currentPage: 8,
+          startDate: this.submitForm.startDate,
+          lastView: this.submitForm.lastView,
+          endDate: this.submitForm.endDate
+        }
+        await axios.post('http://dev.nsw.liberal.org.au/LPNSWAPI/SurveyLookup/PostSurveyStatus', payload, {
+          headers: {
+            Authorization: 'Bearer ' + this.token
+          }
+        })
         const UD_fields = {
           memberid: this.id,
           surveyid: this.submitForm.surveyid,
@@ -295,43 +324,17 @@ export default {
           Authorization: 'Bearer ' + this.token
         }
         })
-        
         const result = await axios.get('http://dev.nsw.liberal.org.au/LPNSWAPI/SurveyLookup/GetUDFields?id=' + this.id + '&ck=' + this.ck + '&surveyTableName=Survey_Supporter21', {
         headers: {
           Authorization: 'Bearer ' + this.token
         }
         })
-        const donationPayload = {
-          memberid: this.id,
-          donation: this.answer_step7.donation
-        }
-        const donation_result = await axios.post('http://dev.nsw.liberal.org.au/LPNSWAPI/SurveyLookup/PostSurveyDonate', donationPayload, {
-        headers: {
-          Authorization: 'Bearer ' + this.token
-        }
-        })
-        if(donation_result.status === 200) {
-          const payload = {
-            memberid: this.id,
-            surveyid: this.submitForm.surveyid,
-            status: 'finished',
-            currentPage: 8,
-            startDate: this.submitForm.startDate,
-            lastView: this.submitForm.lastView,
-            endDate: this.submitForm.endDate
-          }
-          await axios.post('http://dev.nsw.liberal.org.au/LPNSWAPI/SurveyLookup/PostSurveyStatus', payload, {
-            headers: {
-              Authorization: 'Bearer ' + this.token
-            }
-          })
-          this.$store.commit('setDonationResponse', donation_result.data)
-          this.$store.commit('setProgress', 100)
-          this.$store.commit('setCurrentPage', result.data.Answers.Currentpage)
-          this.$store.commit('setAnswers', result.data.Answers)
-        }
+        this.$store.commit('setDonationResponse', donation_result.data)
+        this.$store.commit('setProgress', 100)
+        this.$store.commit('setCurrentPage', result.data.Answers.Currentpage)
+        this.$store.commit('setAnswers', result.data.Answers)
       } catch (error) {
-        this.$toast.error("Something Went Wrong!", {
+        this.$toast.error(error.message, {
           position: "top-right",
           timeout: 5000,
           closeOnClick: true,
@@ -350,7 +353,7 @@ export default {
           behavior: 'smooth'
         })
       } finally {
-        this.submitLoading = this.$loading.show()
+        this.submitLoading.hide()
       }
     },
     async goBack () {
