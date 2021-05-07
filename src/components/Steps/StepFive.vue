@@ -96,18 +96,18 @@
                         <div class="form-group">
                           <select v-model="answer_step5.DOB_month">
                             <option disabled="disabled" value="">Month</option>
-                            <option value="January">January</option>
-                            <option value="February">February</option>
-                            <option value="February">March</option>
-                            <option value="April">April</option>
-                            <option value="April">May</option>
-                            <option value="June">June</option>
-                            <option value="July">July</option>
-                            <option value="August">August</option>
-                            <option value="September">September</option>
-                            <option value="October">October</option>
-                            <option value="November">November</option>
-                            <option value="December">December</option>
+                            <option value="01">January</option>
+                            <option value="02">February</option>
+                            <option value="03">March</option>
+                            <option value="04">April</option>
+                            <option value="05">May</option>
+                            <option value="06">June</option>
+                            <option value="07">July</option>
+                            <option value="08">August</option>
+                            <option value="09">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
                           </select>
                         </div>
                   </div>
@@ -506,7 +506,7 @@ export default {
         },
         {
           value: 'Both',
-          text: 'Yes, I am interested in attending both State and Federal level'
+          text: 'Yes, I am interested in attending corporate events at both a State and Federal level'
         },
         {
           value: 'Not Relevant',
@@ -535,6 +535,10 @@ export default {
     this.id = this.$route.query.id
     this.ck = this.$route.query.ck
     this.getCurrentFields()
+    window.scrollTo({
+      top: 10,
+      behavior: 'smooth'
+    })
   },
   computed: {
     ...mapGetters({

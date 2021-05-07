@@ -25,12 +25,12 @@
                 If you have any questions regarding the survey or your donation, please contact our
                 Membership Team by email at <a
                   href="mailto: membership@nswliberal.org.qu"
-                >membership@nswliberal.org.au</a> or
+                >membership@nsw.liberal.org.au</a> or
                 <br>by
                 phone on <a
                   href="tel:(02) 8356
                                     0300"
-                >(02) 83560300.</a>
+                >(02) 8356 0300.</a>
               </p>
               <template v-if="donation">
                 <h4 class="pt-2">

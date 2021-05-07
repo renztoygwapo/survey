@@ -10,7 +10,7 @@
                   11. Below are all the ways you can further support the NSW Liberal Party
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
-                  Please select any you are personaly interested in
+                  Please select any you are personally interested in
                 </h6>
                 <!-- custom check container -->
                 <div v-for="item in support" :key="item.id" class="checkbox">
@@ -71,7 +71,7 @@
                 </h6>
 
                 <p>A will is to provide for family/friends</p>
-                <div class="radio-box-con d-flex justify-content-md-start justify-content-sm-center">
+                <div class="radio-box-con mb-4 d-flex justify-content-md-start justify-content-sm-center">
                   <div class="radio-box">
                     <input class="input-radio" type="radio" name="radio1" v-model="answer_step4.GIW_Provide_Family" value="Agree">
                     <label for="">AGREE</label>
@@ -87,7 +87,7 @@
                 </div>
 
                 <p>It's also good to leave a gift to a cause if you can</p>
-                <div class="radio-box-con d-flex justify-content-md-start justify-content-sm-center">
+                <div class="radio-box-con mb-4 d-flex justify-content-md-start justify-content-sm-center">
                   <div class="radio-box">
                     <input class="input-radio" type="radio" name="radio2" v-model="answer_step4.GIW_Good_Cause" value="Agree">
                     <label for="">AGREE</label>
@@ -103,7 +103,7 @@
                 </div>
 
                 <p>It's easy to leave a gift or update a will</p>
-                <div class="radio-box-con d-flex justify-content-md-start justify-content-sm-center">
+                <div class="radio-box-con mb-4 d-flex justify-content-md-start justify-content-sm-center">
                   <div class="radio-box">
                     <input class="input-radio" type="radio" name="radio3" v-model="answer_step4.GIW_Ease" value="Agree">
                     <label for="">AGREE</label>
@@ -119,7 +119,7 @@
                 </div>
 
                 <p>I may have enough to include a gift to a cause that I believe in</p>
-                <div class="radio-box-con d-flex justify-content-md-start justify-content-sm-center">
+                <div class="radio-box-con mb-4 d-flex justify-content-md-start justify-content-sm-center">
                   <div class="radio-box">
                     <input class="input-radio" type="radio" name="radio4" v-model="answer_step4.GIW_Enough_Resource" value="Agree">
                     <label for="">AGREE</label>
@@ -134,8 +134,8 @@
                   </div>
                 </div>
 
-                <p>A would like to be thanked in my life for a gift</p>
-                <div class="radio-box-con d-flex justify-content-md-start justify-content-sm-center">
+                <p>I would like to be thanked in my life for a gift</p>
+                <div class="radio-box-con mb-4 d-flex justify-content-md-start justify-content-sm-center">
                   <div class="radio-box">
                     <input class="input-radio" type="radio" name="radio5" v-model="answer_step4.GIW_Thanks" value="Agree">
                     <label for="">AGREE</label>
@@ -242,6 +242,12 @@ export default {
           checked: false
         },
         {
+          id: 'Support_Donation',
+          text: 'Supporting Party beliefs through a donation or gift',
+          disabled: false,
+          checked: false
+        },
+        {
           id: 'Support_Volunteer',
           text: 'Volunteer at the next Federal and/or State Election',
           disabled: false,
@@ -250,12 +256,6 @@ export default {
         {
           id: 'Support_Corporate_Events',
           text: "Attend Corporate events with our NSW State and Federal MP's",
-          disabled: false,
-          checked: false
-        },
-        {
-          id: 'Support_Donation',
-          text: 'Supporting Party beliefs through a donation or gift',
           disabled: false,
           checked: false
         }
@@ -342,6 +342,10 @@ export default {
     this.id = this.$route.query.id
     this.ck = this.$route.query.ck
     this.getCurrentFields()
+    window.scrollTo({
+      top: 10,
+      behavior: 'smooth'
+    })
   },
   computed: {
     ...mapGetters({

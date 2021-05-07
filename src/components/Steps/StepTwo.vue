@@ -388,6 +388,10 @@ export default {
     this.id = this.$route.query.id
     this.ck = this.$route.query.ck
     this.getCurrentFields()
+    window.scrollTo({
+      top: 10,
+      behavior: 'smooth'
+    })
   },
   computed: {
     ...mapGetters({

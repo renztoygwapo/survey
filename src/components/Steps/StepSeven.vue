@@ -32,7 +32,7 @@
                   <p class="mt-5">
                     *I would like to donate
                   </p>
-                  <div class="radio-box-con d-flex justify-content-md-start justify-content-sm-center">
+                  <div class="radio-box-con mb-4 d-flex justify-content-md-start justify-content-sm-center">
                     <div v-for="donate in donations" :key="donate.value" class="radio-box">
                       <input class="input-radio" type="radio" v-model="answer_step7.donation.donation_amount" name="donate_radio" :value="donate.value">
                       <label for="">{{ donate.label }}</label>
@@ -75,18 +75,18 @@
                     <div class="form-group">
                       <label>Expiration Month</label>
                       <select id="exp_month" type="text" placeholder="Expiration Month" v-model="answer_step7.donation.expire_month">
-                        <option value="January">January</option>
-                        <option value="February">February</option>
-                        <option value="March">March</option>
-                        <option value="April">April</option>
-                        <option value="May">May</option>
-                        <option value="June">June</option>
-                        <option value="July">July</option>
-                        <option value="August">August</option>
-                        <option value="September">September</option>
-                        <option value="October">October</option>
-                        <option value="November">November</option>
-                        <option value="December">December</option>
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
                       </select>
                     </div>
                   </div>
@@ -120,8 +120,11 @@
                 <div class="row">
                   <div class="checkbox">
                   <div>
-                    <input id="affirm" v-model="affirm" type="checkbox" value="">
-                    <label for="affirm" class="col-form-label">I affirm I am not a Foreign Donor. Refer to the <a href="#">Donor Eligibility and Disclosure Warning</a> for further information.</label>
+                    <ValidationProvider name="other" rules="required" v-slot="{ errors }">
+                      <input id="affirm" v-model="affirm" type="checkbox" value="">
+                      <span class="error">{{ errors[0] }}</span>
+                      <label for="affirm" class="col-form-label">I affirm I am not a Foreign Donor. Refer to the <a href="https://www.elections.nsw.gov.au/Funding-and-disclosure/Political-donations/Unlawful-political-donations/Prohibited-donors" target="_blank">Donor Eligibility and Disclosure Warning</a> for further information.</label>
+                  </ValidationProvider>
                   </div>
                 </div>
                 </div>
@@ -271,6 +274,10 @@ export default {
   mounted () {
     this.id = this.$route.query.id
     this.ck = this.$route.query.ck
+    window.scrollTo({
+      top: 10,
+      behavior: 'smooth'
+    })
   },
   computed: {
     ...mapGetters({
@@ -285,6 +292,26 @@ export default {
       try {
          this.submitLoading = this.$loading.show()
         
+        if(!this.affirm) {
+          this.$toast.error('Please affirm you are not a foreign donor', {
+          position: "top-right",
+          timeout: 5000,
+          closeOnClick: true,
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          draggable: true,
+          draggablePercent: 0.6,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: true,
+          rtl: false
+        })
+        window.scrollTo({
+          top: 10,
+          behavior: 'smooth'
+        })
+        }
         const donationPayload = {
           memberid: this.id,
           donation: this.answer_step7.donation,

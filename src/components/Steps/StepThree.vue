@@ -60,7 +60,7 @@
             <div class="row">
               <div class="col-md-12">
                 <h3 class="secondary-blue-text mb-2">
-                  8. What is your preferred or would be your method of donating to ?
+                  8. What is your preferred or would be your method of donating to?
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
                   Please select one preference
@@ -248,6 +248,10 @@ export default {
     this.id = this.$route.query.id
     this.ck = this.$route.query.ck
     this.getCurrentFields()
+    window.scrollTo({
+      top: 10,
+      behavior: 'smooth'
+    })
   },
   computed: {
     ...mapGetters({

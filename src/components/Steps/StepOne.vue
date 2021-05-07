@@ -30,7 +30,7 @@
                   successful political force in post war Australia. But these are uncertain times and we
                   want
                   to
-                  ensure we understand your priorities, needs and can help you have the connection with our
+                  ensure we understand your priorities, needs and can help you to have the connection with our
                   Party
                   in the way that
                   works best for you.
@@ -39,7 +39,7 @@
                   Your continued support and involvement is invaluable and greatly appreciated so we thank
                   you
                   in
-                  advance for sharing your insights
+                  advance for sharing your views
                 </p>
                 <p>Yours sincerely</p>
                 <img class="brand-form-logo mb-2" src="http://dev.nsw.liberal.org.au/LPNSW/media/General/SurveySupport20_21/signature.png" alt="">
@@ -52,7 +52,7 @@
                 <p>
                   P.S. We know your time is important so we would like to thank you by offering to one survey
                   recipient — selected randomly — a copy of Lazarus Rising — A Personal and Political
-                  Autobiography of Mr Howard  — signed by John Howard with a personal inscription.
+                  Autobiography of John Howard – signed by Mr Howard with a personal inscription.
                 </p>
                 <hr>
                 <h3 class="mb-3 ">
@@ -108,9 +108,6 @@
                       2. Would you agree or disagree with the following
                       statements in relation to our NSW Liberal Team?
                     </h3>
-                    <h6 class="border-bottom pb-3 mb-4">
-                      Please click on one of the below answers
-                    </h6>
 
                     <!-- radio box section-->
                     <p class="mb-2 font-weight-bold">
@@ -232,7 +229,7 @@
                       addressing the
                       health and economic impacts of the COVID-19 pandemic.
                     </p>
-                    <div class="radio-box-con d-flex justify-content-md-start justify-content-sm-center">
+                    <div class="radio-box-con mb-4 d-flex justify-content-md-start justify-content-sm-center">
                       <div class="radio-box">
                         <input class="input-radio" type="radio" name="radio4" v-model="answer_step1.State_Covid19" value="Strongly Agree">
                         <label for="">STRONGLY AGREE</label>
@@ -276,16 +273,13 @@
                       3. Would you agree or disagree with the following
                       statements in relation to our Federal Liberal Team?
                     </h3>
-                    <h6 class="border-bottom pb-3 mb-4">
-                      Please click on one of the below answers
-                    </h6>
 
                     <!-- radio box section-->
                     <p class="mb-2 font-weight-bold">
                       The Morrison Government is best able to manage and grow
                       the Australian economy.
                     </p>
-                    <div class="radio-box-con d-flex justify-content-md-start justify-content-sm-center">
+                    <div class="radio-box-con mb-4 d-flex justify-content-md-start justify-content-sm-center">
                       <div class="radio-box">
                         <input class="input-radio" type="radio" name="radio5" v-model="answer_step1.Fed_Grow_Economy" value="Strongly Agree">
                         <label for="">STRONGLY AGREE</label>
@@ -322,7 +316,7 @@
                       The Morrison Government has a clear plan for Australia and
                       is delivering on it.
                     </p>
-                    <div class="radio-box-con d-flex justify-content-md-start justify-content-sm-center">
+                    <div class="radio-box-con mb-4 d-flex justify-content-md-start justify-content-sm-center">
                       <div class="radio-box">
                         <input class="input-radio" type="radio" name="radio6" v-model="answer_step1.Fed_Deliver_Clearplan" value="Strongly Agree">
                         <label for="">STRONGLY AGREE</label>
@@ -359,7 +353,7 @@
                       The Morrison Government is concentrating on issues
                       important to you and your family
                     </p>
-                    <div class="radio-box-con d-flex justify-content-md-start justify-content-sm-center">
+                    <div class="radio-box-con mb-4 d-flex justify-content-md-start justify-content-sm-center">
                       <div class="radio-box">
                         <input class="input-radio" type="radio" name="radio7" v-model="answer_step1.Fed_Issues_Family" value="Strongly Agree">
                         <label for="">STRONGLY AGREE</label>
@@ -539,6 +533,10 @@ export default {
     this.id = this.$route.query.id
     this.ck = this.$route.query.ck
     this.getCurrentFields()
+    window.scrollTo({
+      top: 10,
+      behavior: 'smooth'
+    })
   },
   methods: {
     inputChecker () {
@@ -678,7 +676,7 @@ export default {
       token: 'token'
     }),
     fullName () {
-      return this.memberData.Prefix + ' ' + this.memberData.LastName + ' ' + this.memberData.FirstName
+      return this.memberData.Prefix + ' ' + this.memberData.FirstName + ' ' + this.memberData.LastName
     }
   },
   watch: {

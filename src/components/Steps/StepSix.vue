@@ -506,7 +506,7 @@
                   23. We believe
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
-                  A key reason for our success is our foundational principles of individual freedom, free enterprise and equality of oppotunity,
+                  A key reason for our success is our foundational principles of individual freedom, free enterprise and equality of opportunity,
                   which are still relevant today as they were in 1945
                 </h6>
                 <div class="checkbox">
@@ -711,6 +711,11 @@ export default {
     this.id = this.$route.query.id
     this.ck = this.$route.query.ck
     this.getCurrentFields()
+    this.getMember()
+    window.scrollTo({
+      top: 10,
+      behavior: 'smooth'
+    })
   },
   computed: {
     ...mapGetters({
@@ -718,7 +723,8 @@ export default {
       street_types: 'street_types',
       submitForm: 'submitForm',
       member: 'member',
-      token: 'token'
+      token: 'token',
+      answers: 'answers'
     })
   },
   watch: {
@@ -737,6 +743,34 @@ export default {
     }
   },
   methods: {
+    async getMember () {
+      try {
+        this.$store.commit('setLoading', true)
+        const res = await axios.get('http://dev.nsw.liberal.org.au/LPNSWAPI/SurveyLookup/GetMemberDetails?id=' + this.id + '&ck=' + this.ck, {
+        headers: {
+          Authorization: 'Bearer ' + this.token
+        }
+        })
+        this.result = res.data
+        this.$store.commit('setMember', res.data)
+        if (this.member) this.answer_step6.ElectoralAddress.StreetNumber = this.member.StreetNumber
+        if (this.member) this.answer_step6.ElectoralAddress.Street = this.member.Street
+        if (this.member) this.answer_step6.ElectoralAddress.StreetType = this.member.StreetType
+        if (this.member) this.answer_step6.ElectoralAddress.Suburb = this.member.Suburb
+        if (this.member) this.answer_step6.ElectoralAddress.State = this.member.State
+        if (this.member) this.answer_step6.ElectoralAddress.Postcode = this.member.Postcode
+      } catch (error) {
+        console.log('error' + error)
+          const tempData = {
+          memberid: 23423,
+          Prefix: 'Mr',
+          LastName: 'Doe',
+          FirstName: 'Jhon'
+        }
+        this.result = tempData
+        // this.$store.commit('setMember', tempData)
+      }
+    },
     async getCurrentFields() {
       try {
         this.loading = this.$loading.show()
@@ -749,12 +783,6 @@ export default {
         if (this.member) this.answer_step6.Email = this.member.Email
         if (this.member) this.answer_step6.Mobile = this.member.Mobile
         if (this.member) this.answer_step6.HomeNumber = this.member.HomeNumber
-        if (this.member) this.answer_step6.ElectoralAddress.StreetNumber = this.member.StreetNumber
-        if (this.member) this.answer_step6.ElectoralAddress.Street = this.member.Street
-        if (this.member) this.answer_step6.ElectoralAddress.StreetType = this.member.StreetType
-        if (this.member) this.answer_step6.ElectoralAddress.Suburb = this.member.Suburb
-        if (this.member) this.answer_step6.ElectoralAddress.State = this.member.State
-        if (this.member) this.answer_step6.ElectoralAddress.Postcode = this.member.Postcode
         this.answer_step6.Confirm_Mission = res.data.Answers.Confirm_Mission
         this.$store.commit('setAnswers', res.data.Answers)
       } catch (error) {
@@ -773,7 +801,10 @@ export default {
           StreetNumber: this.answer_step6.ElectoralAddress.StreetNumber,
           Street: this.answer_step6.ElectoralAddress.Street,
           Postcode: this.answer_step6.ElectoralAddress.Postcode,
-          Suburb: this.answer_step6.ElectoralAddress.Suburb
+          Suburb: this.answer_step6.ElectoralAddress.Suburb,
+          DateOfBirthDay: this.answers.DOB,
+          DateOfBirthMonth: this.answers.DOB_month,
+          DateOfBirthYear: this.answers.DOB_year
         }
         const postAddress = await axios.post('http://dev.nsw.liberal.org.au/LPNSWAPI/SurveyLookup/PostValidateAddress', address, {headers: {
           Authorization: 'Bearer ' + this.token
@@ -788,9 +819,9 @@ export default {
           FirstName: this.member.FirstName,
           MiddleName: this.member.MiddleName, 
           LastName: this.member.LastName,
-          DateOfBirthDay: this.member.DateOfBirthDay,
-          DateOfBirthMonth: this.member.DateOfBirthMonth,
-          DateOfBirthYear: this.member.DateOfBirthYear,
+          DateOfBirthDay: this.answers.DOB,
+          DateOfBirthMonth: this.answers.DOB_month,
+          DateOfBirthYear: this.answers.DOB_year,
           Email: this.member.Email,
           Mobile: this.member.Mobile,
           HomeNumber: this.member.HomeNumber, 
@@ -847,7 +878,6 @@ export default {
           Authorization: 'Bearer ' + this.token
         }
         })
-        loadingSubmit.hide()
         this.$store.commit('setCurrentPage', result.data.Answers.Currentpage)
         this.$store.commit('setAnswers', result.data.Answers)
         window.scrollTo({
@@ -916,7 +946,6 @@ export default {
         })
       } finally {
         this.loading.hide()
-
       }
     }
   }
