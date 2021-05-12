@@ -405,6 +405,8 @@
 <script>
 import Progress from './Progress.vue'
 import { mapGetters } from 'vuex'
+import moment from 'moment'
+
 export default {
   components: {
     Progress
@@ -516,6 +518,7 @@ export default {
       holds_corporate_events_model: '',
       id: '',
       ck: '',
+      startDate,
       loading: '',
       answer_step5: {
         Gender: '',
@@ -535,6 +538,7 @@ export default {
     this.id = this.$route.query.id
     this.ck = this.$route.query.ck
     this.getCurrentFields()
+    this.startDate = moment().format('MM-DD-YYYY h:mm')
     window.scrollTo({
       top: 10,
       behavior: 'smooth'
@@ -584,7 +588,7 @@ export default {
           status: this.submitForm.status,
           currentPage: 6,
           startDate: this.submitForm.startDate,
-          lastView: this.submitForm.lastView,
+          lastView: this.startDate,
           endDate: this.submitForm.endDate
         }
         const UD_fields = {
@@ -637,7 +641,7 @@ export default {
           status: this.submitForm.status,
           currentPage: 4,
           startDate: this.submitForm.startDate,
-          lastView: this.submitForm.lastView,
+          lastView: this.startDate,
           endDate: this.submitForm.endDate
         }
         await axios.post('http://dev.nsw.liberal.org.au/LPNSWAPI/SurveyLookup/PostSurveyStatus', payload, {

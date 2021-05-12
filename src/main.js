@@ -7,6 +7,7 @@ import { ValidationProvider, ValidationObserver, extend, Validator } from 'vee-v
 import { required } from 'vee-validate/dist/rules'
 import Toast from 'vue-toastification'
 import Loading from 'vue-loading-overlay'
+
 // Import the CSS or use your own!
 import "vue-toastification/dist/index.css"
 import 'vue-loading-overlay/dist/vue-loading.css'
@@ -33,6 +34,19 @@ extend('required', {
   message: () => {
     return `Further details required`
   }
+});
+
+extend('required_affirm', {
+  ...required,
+  message: () => {
+    return `Please Affirm you are not a Foreign Donor`
+  }
+});
+
+// Override the default message.
+extend('required_address', {
+  ...required,
+  message: 'This field is required'
 });
 
 const routes = []

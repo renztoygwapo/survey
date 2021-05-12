@@ -23,8 +23,8 @@ import StepSeven from './components/Steps/StepSeven.vue'
 import Thankyou from './components/Steps/thank-you.vue'
 import { mapGetters } from 'vuex'
 import Loading from 'vue-loading-overlay'
+import moment from 'moment'
 import 'vue-loading-overlay/dist/vue-loading.css'
-
 export default {
   components: {
     StepOne,
@@ -59,17 +59,8 @@ export default {
     })
   },
   async mounted () {
-    const settings = {
-      campaigncode: campaigncode,
-      appealcode: appealcode,
-      fundcode: fundcode,
-      distributioncode: distributioncode,
-      requesttype: requesttype,
-      amexcc: amexcc,
-      visacc: visacc,
-      mastercardcc: mastercardcc
-    }
-    this.$store.commit('setDonationSettings', settings)
+    this.initiateSettings()
+    // console.log(moment().format('MM-DD-YYYY h:mm'))
     this.loading = this.$loading.show()
     this.id = this.$route.query.id
     this.ck = this.$route.query.ck
@@ -84,6 +75,19 @@ export default {
     this.progressBarWidth()
   },
   methods: {
+    initiateSettings () {
+      const settings = {
+        campaigncode: campaigncode,
+        appealcode: appealcode,
+        fundcode: fundcode,
+        distributioncode: distributioncode,
+        requesttype: requesttype,
+        amexcc: amexcc,
+        visacc: visacc,
+        mastercardcc: mastercardcc
+      }
+      this.$store.commit('setDonationSettings', settings)
+    },
     async getToken () {
       try {
         this.$store.commit('setLoading', true)

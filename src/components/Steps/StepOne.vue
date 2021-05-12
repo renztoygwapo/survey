@@ -454,7 +454,7 @@
 <script>
 import Progress from './Progress.vue'
 import { mapGetters } from 'vuex'
-
+import moment from 'moment'
 export default {
   components: {
     Progress
@@ -526,13 +526,17 @@ export default {
       result: null,
       id: '',
       ck: '',
-      loadingSubmit: null
+      loadingSubmit: null,
+      startDate: null,
+      endDate: null,
+      lastView: null
     }
   },
   mounted () {
     this.id = this.$route.query.id
     this.ck = this.$route.query.ck
     this.getCurrentFields()
+    this.startDate = moment().format('MM-DD-YYYY h:mm')
     window.scrollTo({
       top: 10,
       behavior: 'smooth'
@@ -591,7 +595,7 @@ export default {
           status: this.submitForm.status,
           currentPage: 2,
           startDate: this.submitForm.startDate,
-          lastView: this.submitForm.lastView,
+          lastView: this.startDate,
           endDate: this.submitForm.endDate
         }
         const UD_fields = {

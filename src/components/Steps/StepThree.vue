@@ -167,6 +167,7 @@
 <script>
 import Progress from './Progress.vue'
 import { mapGetters } from 'vuex'
+import moment from 'moment'
 
 export default {
   components: {
@@ -231,6 +232,7 @@ export default {
       id: '',
       ck: '',
       loading: '',
+      startDate: '',
       answer_step3: {
         Donate_Reason_RemainState: false,
         Donate_Reason_RemainFed: false,
@@ -248,6 +250,7 @@ export default {
     this.id = this.$route.query.id
     this.ck = this.$route.query.ck
     this.getCurrentFields()
+    this.startDate = moment().format('MM-DD-YYYY h:mm')
     window.scrollTo({
       top: 10,
       behavior: 'smooth'
@@ -314,7 +317,7 @@ export default {
           status: this.submitForm.status,
           currentPage: 4,
           startDate: this.submitForm.startDate,
-          lastView: this.submitForm.lastView,
+          lastView: this.startDate,
           endDate: this.submitForm.endDate
         }
         const UD_fields = {
@@ -366,7 +369,7 @@ export default {
           status: this.submitForm.status,
           currentPage: 2,
           startDate: this.submitForm.startDate,
-          lastView: this.submitForm.lastView,
+          lastView: this.startDate,
           endDate: this.submitForm.endDate
         }
         await axios.post('http://dev.nsw.liberal.org.au/LPNSWAPI/SurveyLookup/PostSurveyStatus', payload, {

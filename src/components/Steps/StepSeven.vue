@@ -120,10 +120,10 @@
                 <div class="row">
                   <div class="checkbox">
                   <div>
-                    <ValidationProvider name="other" rules="required" v-slot="{ errors }">
+                    <ValidationProvider name="other" rules="required_affirm" v-slot="{ errors }">
                       <input id="affirm" v-model="affirm" type="checkbox" value="">
-                      <span class="error">{{ errors[0] }}</span>
                       <label for="affirm" class="col-form-label">I affirm I am not a Foreign Donor. Refer to the <a href="https://www.elections.nsw.gov.au/Funding-and-disclosure/Political-donations/Unlawful-political-donations/Prohibited-donors" target="_blank">Donor Eligibility and Disclosure Warning</a> for further information.</label>
+                      <p class="error">{{ errors[0] }}</p>
                   </ValidationProvider>
                   </div>
                 </div>
@@ -195,6 +195,8 @@
 <script>
 import Progress from './Progress.vue'
 import { mapGetters } from 'vuex'
+import moment from 'moment'
+
 export default {
   components: {
     Progress
@@ -257,6 +259,7 @@ export default {
       id: '',
       ck: '',
       submitLoading: null,
+      startDate: null,
       answer_step7: {
         Final_Comments: '',
         donation: {
@@ -274,6 +277,7 @@ export default {
   mounted () {
     this.id = this.$route.query.id
     this.ck = this.$route.query.ck
+    this.startDate = moment().format('MM-DD-YYYY h:mm')
     window.scrollTo({
       top: 10,
       behavior: 'smooth'
@@ -288,7 +292,7 @@ export default {
     })
   },
   methods: {
-    async submitSurvey () {
+    async submitSurvey (valid) {
       try {
          this.submitLoading = this.$loading.show()
         
@@ -332,7 +336,7 @@ export default {
           currentPage: 8,
           startDate: this.submitForm.startDate,
           lastView: this.submitForm.lastView,
-          endDate: this.submitForm.endDate
+          endDate: this.startDate
         }
         await axios.post('http://dev.nsw.liberal.org.au/LPNSWAPI/SurveyLookup/PostSurveyStatus', payload, {
           headers: {
@@ -392,7 +396,7 @@ export default {
           status: this.submitForm.status,
           currentPage: 6,
           startDate: this.submitForm.startDate,
-          lastView: this.submitForm.lastView,
+          lastView: this.startDate,
           endDate: this.submitForm.endDate
         }
         await axios.post('http://dev.nsw.liberal.org.au/LPNSWAPI/SurveyLookup/PostSurveyStatus', payload, {

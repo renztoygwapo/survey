@@ -46,41 +46,82 @@
                 <div class="row">
                   <div class="col-md-3">
                     <div class="form-group">
-                      <label>Street and unit No.</label>
-                      <input id="street_unit" v-model="answer_step6.ElectoralAddress.StreetNumber" type="text" class="form-control" placeholder="Street and unit No">
+                      <ValidationProvider name="other" rules="required_address" v-slot="{ errors }">
+                        <label>Street and unit No.</label>
+                        <input
+                          id="street_unit"
+                          v-model="answer_step6.ElectoralAddress.StreetNumber"
+                          type="text"
+                          class="form-control"
+                          :style="errors[0] ? 'border-color: #ff0000' : ''"
+                          placeholder="Street and unit No"
+                        >
+                        <p class="error">{{ errors[0] }}</p>
+                      </ValidationProvider>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label>Street Name</label>
-                      <input id="street_name" v-model="answer_step6.ElectoralAddress.Street" type="text" class="form-control" placeholder="Street Name">
+                      <ValidationProvider name="street_name" rules="required_address" v-slot="{ errors }">
+                        <label>Street Name</label>
+                        <input
+                          id="street_name"
+                          v-model="answer_step6.ElectoralAddress.Street"
+                          type="text" class="form-control"
+                          :style="errors[0] ? 'border-color: #ff0000' : ''"
+                          placeholder="Street Name"
+                        >
+                        <p class="error">{{ errors[0] }}</p>
+                      </ValidationProvider>
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
-                      <label>Street type</label> <select id="applicant1_postaladdress_street_type" v-model="answer_step6.ElectoralAddress.StreetType">
-                        <option value="">
-                          Please Select
-                        </option>
-                        <option v-for="item in street_types" :value="item.CODE" :key="item.CODE">
-                          {{ item.CODE }}
-                        </option>
-                      </select>
-                      <!---->
+                      <ValidationProvider name="applicant1_postaladdress_street_type" rules="required_address" v-slot="{ errors }">
+                          <label>Street type</label>
+                          <select
+                            id="applicant1_postaladdress_street_type"
+                            v-model="answer_step6.ElectoralAddress.StreetType"
+                            :style="errors[0] ? 'border-color: #ff0000' : ''"
+                            >
+                          <option value="">
+                            Please Select
+                          </option>
+                          <option v-for="item in street_types" :value="item.CODE" :key="item.CODE">
+                            {{ item.CODE }}
+                          </option>
+                        </select>
+                        <p class="error">{{ errors[0] }}</p>
+                      </ValidationProvider>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label>Suburb</label>
-                      <input id="suburb" v-model="answer_step6.ElectoralAddress.Suburb" type="text" class="form-control" placeholder="Suburb">
+                      <ValidationProvider name="suburb" rules="required_address" v-slot="{ errors }">
+                        <label>Suburb</label>
+                        <input
+                          id="suburb"
+                          v-model="answer_step6.ElectoralAddress.Suburb"
+                          type="text"
+                          class="form-control"
+                          placeholder="Suburb"
+                          :style="errors[0] ? 'border-color: #ff0000' : ''"
+                          >
+                        <p class="error">{{ errors[0] }}</p>
+                      </ValidationProvider>
                     </div>
                   </div>
                   <div class="col-md-4">
+                      <ValidationProvider name="applicant2_postaladdress_state" rules="required_address" v-slot="{ errors }">
                         <div class="form-group">
                           <label>State</label>
-                            <select v-model="answer_step6.ElectoralAddress.State" id="applicant2_postaladdress_state">
+                            <select
+                              v-model="answer_step6.ElectoralAddress.State"
+                              id="applicant2_postaladdress_state"
+                              :style="errors[0] ? 'border-color: #ff0000' : ''"
+                            >
                             <option value="">
                               Select State
                             </option> <option value="ACT">
@@ -101,14 +142,24 @@
                               WA
                             </option>
                           </select>
-                          <!---->
+                          <p class="error">{{ errors[0] }}</p>
                         </div>
+                      </ValidationProvider>
                       </div>
                   <div class="col-md-4">
-                    <div class="form-group">
-                      <label>Postcode</label>
-                      <input id="postcode" v-model="answer_step6.ElectoralAddress.Postcode" type="text" class="form-control" placeholder="Postcode">
-                    </div>
+                      <ValidationProvider name="postcode" rules="required_address" v-slot="{ errors }">
+                      <div class="form-group">
+                        <label>Postcode</label>
+                        <input
+                          id="postcode"
+                          v-model="answer_step6.ElectoralAddress.Postcode" 
+                          type="text" class="form-control"
+                          :style="errors[0] ? 'border-color: #ff0000' : ''"
+                          placeholder="Postcode"
+                        >
+                        <p class="error">{{ errors[0] }}</p>
+                      </div>
+                      </ValidationProvider>
                   </div>
                 </div>
                 <hr>
@@ -132,324 +183,67 @@
                       </label>
                     </div>
                     <div class="row">
-                      <div class="col-md-3">
+                      <div class="col-md-4">
+                      <ValidationProvider name="address_line_1" rules="required_address" v-slot="{ errors }">
                         <div class="form-group">
-                          <label>Unit No and/or Street No</label>
-                          <input id="applicant1_postaladdress_street_number" v-model="answer_step6.PostalAddress.StreetNumber" maxlength="40" type="text" class="form-control" :disabled="answer_step6.is_same_postal">
-                          <!---->
+                          <label>Address Line 1</label>
+                          <input
+                            id="address_line_1"
+                            v-model="answer_step6.PostalAddress.AddressLine1"
+                            maxlength="40"
+                            type="text"
+                            class="form-control"
+                            :style="errors[0] ? 'border-color: #ff0000' : ''"
+                            :disabled="answer_step6.is_same_postal"
+                            >
+                          <p class="error">{{ errors[0] }}</p>
+                        </div>
+                      </ValidationProvider>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>Address Line 2</label>
+                          <input
+                            id="address_line_2"
+                            v-model="answer_step6.PostalAddress.AddressLine2"
+                            maxlength="40"
+                            type="text"
+                            class="form-control"
+                            :disabled="answer_step6.is_same_postal"
+                            >
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                         <div class="form-group">
-                          <label>Street name</label> <input id="applicant1_postaladdress_street_name" v-model="answer_step6.PostalAddress.Street" type="text" class="form-control" :disabled="answer_step6.is_same_postal">
-                          <!---->
-                        </div>
-                      </div>
-                      <div class="col-md-3">
-                        <div class="form-group">
-                          <label>Street type</label> <select id="applicant1_postaladdress_street_type" v-model="answer_step6.PostalAddress.StreetType" :disabled="answer_step6.is_same_postal">
-                            <option value="">
-                              Please Select
-                            </option> <option value="None">
-                              None
-                            </option> <option value="Access">
-                              Access
-                            </option><option value="Alley">
-                              Alley
-                            </option><option value="Avenue">
-                              Avenue
-                            </option><option value="Avenue East">
-                              Avenue East
-                            </option><option value="Avenue North">
-                              Avenue North
-                            </option><option value="Avenue South">
-                              Avenue South
-                            </option><option value="Avenue West">
-                              Avenue West
-                            </option><option value="Bay">
-                              Bay
-                            </option><option value="Bend">
-                              Bend
-                            </option><option value="Boulevarde">
-                              Boulevarde
-                            </option><option value="Brace">
-                              Brace
-                            </option><option value="Brae">
-                              Brae
-                            </option><option value="Brett">
-                              Brett
-                            </option><option value="Causeway">
-                              Causeway
-                            </option><option value="Chase">
-                              Chase
-                            </option><option value="Circle">
-                              Circle
-                            </option><option value="Circlet">
-                              Circlet
-                            </option><option value="Circuit">
-                              Circuit
-                            </option><option value="Close">
-                              Close
-                            </option><option value="Cmmn">
-                              Cmmn
-                            </option><option value="Corner">
-                              Corner
-                            </option><option value="Court">
-                              Court
-                            </option><option value="Court North">
-                              Court North
-                            </option><option value="Court South">
-                              Court South
-                            </option><option value="Cove">
-                              Cove
-                            </option><option value="Crescent">
-                              Crescent
-                            </option><option value="Crescent East">
-                              Crescent East
-                            </option><option value="Crescent North">
-                              Crescent North
-                            </option><option value="Crescent South">
-                              Crescent South
-                            </option><option value="Crest">
-                              Crest
-                            </option><option value="Cross">
-                              Cross
-                            </option><option value="Crossing">
-                              Crossing
-                            </option><option value="Deviation">
-                              Deviation
-                            </option><option value="Downs">
-                              Downs
-                            </option><option value="Drive">
-                              Drive
-                            </option><option value="Drive East">
-                              Drive East
-                            </option><option value="Drive North">
-                              Drive North
-                            </option><option value="Drive South">
-                              Drive South
-                            </option><option value="Drive West">
-                              Drive West
-                            </option><option value="End">
-                              End
-                            </option><option value="Esplanade">
-                              Esplanade
-                            </option><option value="Esplanade South">
-                              Esplanade South
-                            </option><option value="Estate">
-                              Estate
-                            </option><option value="Fawy">
-                              Fawy
-                            </option><option value="Garden">
-                              Garden
-                            </option><option value="Gardens">
-                              Gardens
-                            </option><option value="Gate">
-                              Gate
-                            </option><option value="Glade">
-                              Glade
-                            </option><option value="Glen">
-                              Glen
-                            </option><option value="Grange">
-                              Grange
-                            </option><option value="Green">
-                              Green
-                            </option><option value="Grove">
-                              Grove
-                            </option><option value="Heights">
-                              Heights
-                            </option><option value="Highway">
-                              Highway
-                            </option><option value="Highway East">
-                              Highway East
-                            </option><option value="Highway North">
-                              Highway North
-                            </option><option value="Highway South">
-                              Highway South
-                            </option><option value="Highway West">
-                              Highway West
-                            </option><option value="Hill">
-                              Hill
-                            </option><option value="Inlet">
-                              Inlet
-                            </option><option value="Island">
-                              Island
-                            </option><option value="Key">
-                              Key
-                            </option><option value="Knoll">
-                              Knoll
-                            </option><option value="Lane">
-                              Lane
-                            </option><option value="Lane East">
-                              Lane East
-                            </option><option value="Lane North">
-                              Lane North
-                            </option><option value="Lane South">
-                              Lane South
-                            </option><option value="Lane West">
-                              Lane West
-                            </option><option value="Link">
-                              Link
-                            </option><option value="Lookout">
-                              Lookout
-                            </option><option value="Loop">
-                              Loop
-                            </option><option value="Mall">
-                              Mall
-                            </option><option value="Mart">
-                              Mart
-                            </option><option value="Mew">
-                              Mew
-                            </option><option value="Mews">
-                              Mews
-                            </option><option value="Nook">
-                              Nook
-                            </option><option value="Oval">
-                              Oval
-                            </option><option value="Parade">
-                              Parade
-                            </option><option value="Parade East">
-                              Parade East
-                            </option><option value="Parade North">
-                              Parade North
-                            </option><option value="Parade South">
-                              Parade South
-                            </option><option value="Parade West">
-                              Parade West
-                            </option><option value="Park">
-                              Park
-                            </option><option value="Parkway">
-                              Parkway
-                            </option><option value="Pass">
-                              Pass
-                            </option><option value="Path">
-                              Path
-                            </option><option value="Pathway">
-                              Pathway
-                            </option><option value="Peninsula">
-                              Peninsula
-                            </option><option value="Place">
-                              Place
-                            </option><option value="Plaza">
-                              Plaza
-                            </option><option value="Pocket">
-                              Pocket
-                            </option><option value="Point">
-                              Point
-                            </option><option value="Port">
-                              Port
-                            </option><option value="Promenade">
-                              Promenade
-                            </option><option value="Quadrant">
-                              Quadrant
-                            </option><option value="Range">
-                              Range
-                            </option><option value="Reach">
-                              Reach
-                            </option><option value="Reserve">
-                              Reserve
-                            </option><option value="Retreat">
-                              Retreat
-                            </option><option value="Ridge">
-                              Ridge
-                            </option><option value="Ring">
-                              Ring
-                            </option><option value="Rise">
-                              Rise
-                            </option><option value="Road">
-                              Road
-                            </option><option value="Road East">
-                              Road East
-                            </option><option value="Road Extended">
-                              Road Extended
-                            </option><option value="Road North">
-                              Road North
-                            </option><option value="Road South">
-                              Road South
-                            </option><option value="Road West">
-                              Road West
-                            </option><option value="Route">
-                              Route
-                            </option><option value="Route N">
-                              Route N
-                            </option><option value="Route S">
-                              Route S
-                            </option><option value="Row">
-                              Row
-                            </option><option value="Rowe">
-                              Rowe
-                            </option><option value="Run">
-                              Run
-                            </option><option value="Skyline">
-                              Skyline
-                            </option><option value="Spur">
-                              Spur
-                            </option><option value="Square">
-                              Square
-                            </option><option value="Steps">
-                              Steps
-                            </option><option value="Straight">
-                              Straight
-                            </option><option value="Street">
-                              Street
-                            </option><option value="Street East">
-                              Street East
-                            </option><option value="Street North">
-                              Street North
-                            </option><option value="Street South">
-                              Street South
-                            </option><option value="Street West">
-                              Street West
-                            </option><option value="Strip">
-                              Strip
-                            </option><option value="Strt">
-                              Strt
-                            </option><option value="Subway">
-                              Subway
-                            </option><option value="Terrace">
-                              Terrace
-                            </option><option value="Terrace North">
-                              Terrace North
-                            </option><option value="Tor">
-                              Tor
-                            </option><option value="Track">
-                              Track
-                            </option><option value="Trail">
-                              Trail
-                            </option><option value="View">
-                              View
-                            </option><option value="Views">
-                              Views
-                            </option><option value="Walk">
-                              Walk
-                            </option><option value="Walkway">
-                              Walkway
-                            </option><option value="Way">
-                              Way
-                            </option><option value="Way East">
-                              Way East
-                            </option><option value="Way North">
-                              Way North
-                            </option><option value="Way South">
-                              Way South
-                            </option><option value="Ways">
-                              Ways
-                            </option><option value="Weg">
-                              Weg
-                            </option>
-                          </select>
-                          <!---->
+                          <label>Address Line 3</label>
+                          <input
+                            id="address_line_3"
+                            v-model="answer_step6.PostalAddress.AddressLine3"
+                            maxlength="40"
+                            type="text"
+                            class="form-control"
+                            :disabled="answer_step6.is_same_postal"
+                            >
                         </div>
                       </div>
                     </div>
                     <!---->
                     <div class="row">
                       <div class="col-md-4">
+                      <ValidationProvider name="applicant1_postaladdress_suburb" rules="required_address" v-slot="{ errors }">
                         <div class="form-group">
                           <label>Suburb</label>
-                          <input id="applicant1_postaladdress_suburb" v-model="answer_step6.PostalAddress.Suburb" type="text" class="form-control" :disabled="answer_step6.is_same_postal">
-                          <!---->
+                          <input
+                            id="applicant1_postaladdress_suburb"
+                            v-model="answer_step6.PostalAddress.Suburb"
+                            type="text"
+                            class="form-control"
+                            :style="errors[0] ? 'border-color: #ff0000' : ''"
+                            :disabled="answer_step6.is_same_postal"
+                            >
+                          <p class="error">{{ errors[0] }}</p>
                         </div>
+                      </ValidationProvider>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
@@ -479,11 +273,19 @@
                         </div>
                       </div>
                       <div class="col-md-4">
+                      <ValidationProvider name="applicant1_postaladdress_post_code" rules="required_address" v-slot="{ errors }">
                         <div class="form-group">
                           <label>Postcode</label>
-                          <input id="applicant1_postaladdress_post_code" type="text" v-model="answer_step6.PostalAddress.Postcode" class="form-control" :disabled="answer_step6.is_same_postal">
-                          <!---->
+                          <input
+                          id="applicant1_postaladdress_post_code"
+                          type="text" v-model="answer_step6.PostalAddress.Postcode"
+                          class="form-control"
+                          :style="errors[0] ? 'border-color: #ff0000' : ''"
+                          :disabled="answer_step6.is_same_postal"
+                          >
+                          <p class="error">{{ errors[0] }}</p>
                         </div>
+                      </ValidationProvider>
                       </div>
                     </div>
                     <!---->
@@ -554,12 +356,14 @@
 <script>
 import Progress from './Progress.vue'
 import { mapGetters } from 'vuex'
+import moment from 'moment'
 export default {
   components: {
     Progress
   },
   data () {
     return {
+      startDate: null,
       form: {
         street_name: '',
         street_type: '',
@@ -682,6 +486,7 @@ export default {
       ck: '',
       loading: '',
       loadingSubmit: false,
+      startDate: null,
       answer_step6: {
         is_same_postal: false,
         Confirm_Mission: false,
@@ -697,21 +502,826 @@ export default {
           Postcode: ''
         },
         PostalAddress: {
-          StreetNumber: '', 
-          Street: '', 
-          StreetType: '', 
+          AddressLine1: '', 
+          AddressLine2: '', 
+          AddressLine3: '', 
           Suburb: '', 
           State: '', 
           Postcode: ''
         }
-      }
+      },
+      street_types_mapper: [
+        {
+            Abbreviation: "ACCS",
+            street_type: "Access"
+        },
+        {
+            Abbreviation: "ALLY",
+            street_type: "Alley"
+        },
+        {
+            Abbreviation: "ALWY",
+            street_type: "Alleyway"
+        },
+        {
+            Abbreviation: "AMBL",
+            street_type: "Amble"
+        },
+        {
+            Abbreviation: "APP",
+            street_type: "Approach"
+        },
+        {
+            Abbreviation: "ARC",
+            street_type: "Arcade"
+        },
+        {
+            Abbreviation: "ARTL",
+            street_type: "Arterial"
+        },
+        {
+            Abbreviation: "ARTY",
+            street_type: "Artery"
+        },
+        {
+            Abbreviation: "AV",
+            street_type: "Avenue"
+        },
+        {
+            Abbreviation: "AV E",
+            street_type: "Avenue East"
+        },
+        {
+            Abbreviation: "AV N",
+            street_type: "Avenue North"
+        },
+        {
+            Abbreviation: "AV S",
+            street_type: "Avenue South"
+        },
+        {
+            Abbreviation: "AV W",
+            street_type: "Avenue West"
+        },
+        {
+            Abbreviation: "BA",
+            street_type: "Banan"
+        },
+        {
+            Abbreviation: "BAY",
+            street_type: "Bay"
+        },
+        {
+            Abbreviation: "BEND",
+            street_type: "Bend"
+        },
+        {
+            Abbreviation: "BWLK",
+            street_type: "Boardwalk"
+        },
+        {
+            Abbreviation: "BVD",
+            street_type: "Boulevarde"
+        },
+        {
+            Abbreviation: "BR",
+            street_type: "Brace"
+        },
+        {
+            Abbreviation: "BRT",
+            street_type: "Brett"
+        },
+        {
+            Abbreviation: "BRAE",
+            street_type: "Brae"
+        },
+        {
+            Abbreviation: "BRK",
+            street_type: "Break"
+        },
+        {
+            Abbreviation: "BROW",
+            street_type: "Brow"
+        },
+        {
+            Abbreviation: "BYPA",
+            street_type: "Bypass"
+        },
+        {
+            Abbreviation: "BYWY",
+            street_type: "Byway"
+        },
+        {
+            Abbreviation: "CSWY",
+            street_type: "Causeway"
+        },
+        {
+            Abbreviation: "CTR",
+            street_type: "Centre"
+        },
+        {
+            Abbreviation: "CH",
+            street_type: "Chase"
+        },
+        {
+            Abbreviation: "CIR",
+            street_type: "Circle"
+        },
+        {
+            Abbreviation: "CLT",
+            street_type: "Circlet"
+        },
+        {
+            Abbreviation: "CCT",
+            street_type: "Circuit"
+        },
+        {
+            Abbreviation: "CRCS",
+            street_type: "Circus"
+        },
+        {
+            Abbreviation: "CL",
+            street_type: "Close"
+        },
+        {
+            Abbreviation: "CMMN",
+            street_type: "Common"
+        },
+        {
+            Abbreviation: "CON",
+            street_type: "Concourse"
+        },
+        {
+            Abbreviation: "CPS",
+            street_type: "Copse"
+        },
+        {
+            Abbreviation: "CNR",
+            street_type: "Corner"
+        },
+        {
+            Abbreviation: "CT N",
+            street_type: "Court North"
+        },
+        {
+            Abbreviation: "CT S",
+            street_type: "Court South"
+        },
+        {
+            Abbreviation: "CT",
+            street_type: "Court"
+        },
+        {
+            Abbreviation: "CTYD",
+            street_type: "Courtyard"
+        },
+        {
+            Abbreviation: "COVE",
+            street_type: "Cove"
+        },
+        {
+            Abbreviation: "CR S",
+            street_type: "Crescent South"
+        },
+        {
+            Abbreviation: "CR N",
+            street_type: "Crescent North"
+        },
+        {
+            Abbreviation: "CR E",
+            street_type: "Crescent East"
+        },
+        {
+            Abbreviation: "CR W",
+            street_type: "Crescent West"
+        },
+        {
+            Abbreviation: "CR",
+            street_type: "Crescent"
+        },
+        {
+            Abbreviation: "CRST",
+            street_type: "Crest"
+        },
+        {
+            Abbreviation: "CRSS",
+            street_type: "Cross"
+        },
+        {
+            Abbreviation: "CSRG",
+            street_type: "Crossing"
+        },
+        {
+            Abbreviation: "CSAC",
+            street_type: "Cul-de-sac"
+        },
+        {
+            Abbreviation: "CUTT",
+            street_type: "Cutting"
+        },
+        {
+            Abbreviation: "DALE",
+            street_type: "Dale"
+        },
+        {
+            Abbreviation: "DEVN",
+            street_type: "Deviation"
+        },
+        {
+            Abbreviation: "DIP",
+            street_type: "Dip"
+        },
+        {
+            Abbreviation: "DWNS",
+            street_type: "Downs"
+        },
+        {
+            Abbreviation: "DR N",
+            street_type: "Drive North"
+        },
+        {
+            Abbreviation: "DR S",
+            street_type: "Drive South"
+        },
+        {
+            Abbreviation: "DR E",
+            street_type: "Drive East"
+        },
+        {
+            Abbreviation: "DR W",
+            street_type: "Drive West"
+        },
+        {
+            Abbreviation: "DR",
+            street_type: "Drive"
+        },
+        {
+            Abbreviation: "DVWY",
+            street_type: "Driveway"
+        },
+        {
+            Abbreviation: "EDGE",
+            street_type: "Edge"
+        },
+        {
+            Abbreviation: "ELB",
+            street_type: "Elbow"
+        },
+        {
+            Abbreviation: "END",
+            street_type: "End"
+        },
+        {
+            Abbreviation: "ENT",
+            street_type: "Entrance"
+        },
+        {
+            Abbreviation: "ESP N",
+            street_type: "Esplanade North"
+        },
+        {
+            Abbreviation: "ESP S",
+            street_type: "Esplanade South"
+        },
+        {
+            Abbreviation: "ESP",
+            street_type: "Esplanade"
+        },
+        {
+            Abbreviation: "EST",
+            street_type: "Estate"
+        },
+        {
+            Abbreviation: "EXP",
+            street_type: "Expressway"
+        },
+        {
+            Abbreviation: "FAWY",
+            street_type: "Fairway"
+        },
+        {
+            Abbreviation: "FOLW",
+            street_type: "Follow"
+        },
+        {
+            Abbreviation: "FTWY",
+            street_type: "Footway"
+        },
+        {
+            Abbreviation: "FORM",
+            street_type: "Formation"
+        },
+        {
+            Abbreviation: "FWY",
+            street_type: "Freeway"
+        },
+        {
+            Abbreviation: "FRTG",
+            street_type: "Frontage"
+        },
+        {
+            Abbreviation: "GAP",
+            street_type: "Gap"
+        },
+        {
+            Abbreviation: "GDN",
+            street_type: "Garden"
+        },
+        {
+            Abbreviation: "GDNS",
+            street_type: "Gardens"
+        },
+        {
+            Abbreviation: "GTE",
+            street_type: "Gate"
+        },
+        {
+            Abbreviation: "GLDE",
+            street_type: "Glade"
+        },
+        {
+            Abbreviation: "GLEN",
+            street_type: "Glen"
+        },
+        {
+            Abbreviation: "GRA",
+            street_type: "Grange"
+        },
+        {
+            Abbreviation: "GRN",
+            street_type: "Green"
+        },
+        {
+            Abbreviation: "GR",
+            street_type: "Grove"
+        },
+        {
+            Abbreviation: "HTS",
+            street_type: "Heights"
+        },
+        {
+            Abbreviation: "HIRD",
+            street_type: "Highroad"
+        },
+        {
+            Abbreviation: "HWY N",
+            street_type: "Highway North"
+        },
+        {
+            Abbreviation: "HWY S",
+            street_type: "Highway South"
+        },
+        {
+            Abbreviation: "HWY E",
+            street_type: "Highway East"
+        },
+        {
+            Abbreviation: "HWY W",
+            street_type: "Highway West"
+        },
+        {
+            Abbreviation: "HWY",
+            street_type: "Highway"
+        },
+        {
+            Abbreviation: "HILL",
+            street_type: "Hill"
+        },
+        {
+            Abbreviation: "INLT",
+            street_type: "Inlet"
+        },
+        {
+            Abbreviation: "ISL",
+            street_type: "Island"
+        },
+        {
+            Abbreviation: "INTG",
+            street_type: "Interchange"
+        },
+        {
+            Abbreviation: "JNC",
+            street_type: "Junction"
+        },
+        {
+            Abbreviation: "KEY",
+            street_type: "Key"
+        },
+        {
+            Abbreviation: "KNL",
+            street_type: "Knoll"
+        },
+        {
+            Abbreviation: "LANE N",
+            street_type: "Lane North"
+        },
+        {
+            Abbreviation: "LANE S",
+            street_type: "Lane South"
+        },
+        {
+            Abbreviation: "LANE E",
+            street_type: "Lane East"
+        },
+        {
+            Abbreviation: "LANE W",
+            street_type: "Lane West"
+        },
+        {
+            Abbreviation: "LANE",
+            street_type: "Lane"
+        },
+        {
+            Abbreviation: "LNWY",
+            street_type: "Laneway"
+        },
+        {
+            Abbreviation: "LINE",
+            street_type: "Line"
+        },
+        {
+            Abbreviation: "LINK",
+            street_type: "Link"
+        },
+        {
+            Abbreviation: "LKT",
+            street_type: "Lookout"
+        },
+        {
+            Abbreviation: "LOOP",
+            street_type: "Loop"
+        },
+        {
+            Abbreviation: "MALL",
+            street_type: "Mall"
+        },
+        {
+            Abbreviation: "MNDR",
+            street_type: "Meander"
+        },
+        {
+            Abbreviation: "MEW",
+            street_type: "Mew"
+        },
+        {
+            Abbreviation: "MEWS",
+            street_type: "Mews"
+        },
+        {
+            Abbreviation: "MTWY",
+            street_type: "Motorway"
+        },
+        {
+            Abbreviation: "NOOK",
+            street_type: "Nook"
+        },
+        {
+            Abbreviation: "OTLK",
+            street_type: "Outlook"
+        },
+        {
+            Abbreviation: "OVL",
+            street_type: "Oval"
+        },
+        {
+            Abbreviation: "PDE N",
+            street_type: "Parade North"
+        },
+        {
+            Abbreviation: "PDE S",
+            street_type: "Parade South"
+        },
+        {
+            Abbreviation: "PDE E",
+            street_type: "Parade East"
+        },
+        {
+            Abbreviation: "PDE W",
+            street_type: "Parade West"
+        },
+        {
+            Abbreviation: "PDE",
+            street_type: "Parade"
+        },
+        {
+            Abbreviation: "PARK",
+            street_type: "Park"
+        },
+        {
+            Abbreviation: "PWY",
+            street_type: "Parkway"
+        },
+        {
+            Abbreviation: "PASS",
+            street_type: "Pass"
+        },
+        {
+            Abbreviation: "PSGE",
+            street_type: "Passage"
+        },
+        {
+            Abbreviation: "PATH",
+            street_type: "Path"
+        },
+        {
+            Abbreviation: "PWAY",
+            street_type: "Pathway"
+        },
+        {
+            Abbreviation: "PENN",
+            street_type: "Penninsula"
+        },
+        {
+            Abbreviation: "PIAZ",
+            street_type: "Piazza"
+        },
+        {
+            Abbreviation: "PL",
+            street_type: "Place"
+        },
+        {
+            Abbreviation: "PLZA",
+            street_type: "Plaza"
+        },
+        {
+            Abbreviation: "PKT",
+            street_type: "Pocket"
+        },
+        {
+            Abbreviation: "PNT",
+            street_type: "Point"
+        },
+        {
+            Abbreviation: "PORT",
+            street_type: "Port"
+        },
+        {
+            Abbreviation: "PROM",
+            street_type: "Promenade"
+        },
+        {
+            Abbreviation: "QDRT",
+            street_type: "Quadrant"
+        },
+        {
+            Abbreviation: "QYS",
+            street_type: "Quays"
+        },
+        {
+            Abbreviation: "RMBL",
+            street_type: "Ramble"
+        },
+        {
+            Abbreviation: "RNGE",
+            street_type: "Range"
+        },
+        {
+            Abbreviation: "RCH",
+            street_type: "Reach"
+        },
+        {
+            Abbreviation: "REST",
+            street_type: "Reserve"
+        },
+        {
+            Abbreviation: "REST",
+            street_type: "Rest"
+        },
+        {
+            Abbreviation: "RTT",
+            street_type: "Retreat"
+        },
+        {
+            Abbreviation: "RDGE",
+            street_type: "Ridge"
+        },
+        {
+            Abbreviation: "RING",
+            street_type: "Ring"
+        },
+        {
+            Abbreviation: "RISE",
+            street_type: "Rise"
+        },
+        {
+            Abbreviation: "RD E",
+            street_type: "Road East"
+        },
+        {
+            Abbreviation: "RD EXT",
+            street_type: "Road Extended"
+        },
+        {
+            Abbreviation: "RD N",
+            street_type: "Road North"
+        },
+        {
+            Abbreviation: "RD S",
+            street_type: "Road South"
+        },
+        {
+            Abbreviation: "RD W",
+            street_type: "Road West"
+        },
+        {
+            Abbreviation: "RD",
+            street_type: "Road"
+        },
+        {
+            Abbreviation: "RTY",
+            street_type: "Rotary"
+        },
+        {
+            Abbreviation: "RTE N",
+            street_type: "Route North"
+        },
+        {
+            Abbreviation: "RTE S",
+            street_type: "Route South"
+        },
+        {
+            Abbreviation: "RTE",
+            street_type: "Route"
+        },
+        {
+            Abbreviation: "ROW",
+            street_type: "Row"
+        },
+        {
+            Abbreviation: "RUN",
+            street_type: "Run"
+        },
+        {
+            Abbreviation: "RUE",
+            street_type: "Rue"
+        },
+        {
+            Abbreviation: "SVWY",
+            street_type: "Serviceway"
+        },
+        {
+            Abbreviation: "SHUN",
+            street_type: "Shunt"
+        },
+        {
+            Abbreviation: "SKY",
+            street_type: "Skyline"
+        },
+        {
+            Abbreviation: "SPUR",
+            street_type: "Spur"
+        },
+        {
+            Abbreviation: "SQ",
+            street_type: "Square"
+        },
+        {
+            Abbreviation: "STPS",
+            street_type: "Steps"
+        },
+        {
+            Abbreviation: "STRT",
+            street_type: "Straight"
+        },
+        {
+            Abbreviation: "ST N",
+            street_type: "Street North"
+        },
+        {
+            Abbreviation: "ST S",
+            street_type: "Street South"
+        },
+        {
+            Abbreviation: "ST E",
+            street_type: "Street East"
+        },
+        {
+            Abbreviation: "ST W",
+            street_type: "Street West"
+        },
+        {
+            Abbreviation: "ST",
+            street_type: "Street"
+        },
+        {
+            Abbreviation: "STRP",
+            street_type: "Strip"
+        },
+        {
+            Abbreviation: "SBWY",
+            street_type: "Subway"
+        },
+        {
+            Abbreviation: "TARN",
+            street_type: "Tarn"
+        },
+        {
+            Abbreviation: "TCE N",
+            street_type: "Terrace North"
+        },
+        {
+            Abbreviation: "TCE",
+            street_type: "Terrace"
+        },
+        {
+            Abbreviation: "THFR",
+            street_type: "Thoroughfare"
+        },
+        {
+            Abbreviation: "TLWY",
+            street_type: "Tollway"
+        },
+        {
+            Abbreviation: "TOP",
+            street_type: "Top"
+        },
+        {
+            Abbreviation: "TOR",
+            street_type: "Tor"
+        },
+        {
+            Abbreviation: "TRK",
+            street_type: "Track"
+        },
+        {
+            Abbreviation: "TRL",
+            street_type: "Trail"
+        },
+        {
+            Abbreviation: "TURN",
+            street_type: "Turn"
+        },
+        {
+            Abbreviation: "UPAS",
+            street_type: "Underpass"
+        },
+        {
+            Abbreviation: "VALE",
+            street_type: "Vale"
+        },
+        {
+            Abbreviation: "VIAD",
+            street_type: "Viaduct"
+        },
+        {
+            Abbreviation: "VIEW",
+            street_type: "View"
+        },
+        {
+            Abbreviation: "VIEWS",
+            street_type: "Views"
+        },
+        {
+            Abbreviation: "VSTA",
+            street_type: "Vista"
+        },
+        {
+            Abbreviation: "WALK",
+            street_type: "Walk"
+        },
+        {
+            Abbreviation: "WKWY",
+            street_type: "Walkway"
+        },
+        {
+            Abbreviation: "WAY N",
+            street_type: "Way North"
+        },
+        {
+            Abbreviation: "WAY S",
+            street_type: "Way South"
+        },
+        {
+            Abbreviation: "WAY",
+            street_type: "Way"
+        },
+        {
+            Abbreviation: "WAYS",
+            street_type: "Ways"
+        },
+        {
+            Abbreviation: "WEG",
+            street_type: "Weg"
+        },
+        {
+            Abbreviation: "WHRF",
+            street_type: "Wharf"
+        },
+        {
+            Abbreviation: "WYND",
+            street_type: "Wynd"
+        }
+    ]
     }
   },
-  mounted () {
+  async mounted () {
     this.id = this.$route.query.id
     this.ck = this.$route.query.ck
-    this.getCurrentFields()
-    this.getMember()
+    this.startDate = moment().format('MM-DD-YYYY h:mm')
+    await this.getCurrentFields()
+    await this.getMember()
+    await this.getStreetTypeMapper()
+    this.startDate = moment().format('MM-DD-YYYY h:mm')
     window.scrollTo({
       top: 10,
       behavior: 'smooth'
@@ -732,9 +1342,7 @@ export default {
       deep: true,
       handler () {
         if (this.answer_step6.is_same_postal) {
-          this.answer_step6.PostalAddress.StreetNumber = this.answer_step6.ElectoralAddress.StreetNumber
-          this.answer_step6.PostalAddress.Street = this.answer_step6.ElectoralAddress.Street
-          this.answer_step6.PostalAddress.StreetType = this.answer_step6.ElectoralAddress.StreetType
+          this.answer_step6.PostalAddress.AddressLine1 = this.answer_step6.ElectoralAddress.StreetNumber + ' ' + Street + ' ' + StreetType
           this.answer_step6.PostalAddress.State = this.answer_step6.ElectoralAddress.State
           this.answer_step6.PostalAddress.Suburb = this.answer_step6.ElectoralAddress.Suburb
           this.answer_step6.PostalAddress.Postcode = this.answer_step6.ElectoralAddress.Postcode
@@ -759,6 +1367,13 @@ export default {
         if (this.member) this.answer_step6.ElectoralAddress.Suburb = this.member.Suburb
         if (this.member) this.answer_step6.ElectoralAddress.State = this.member.State
         if (this.member) this.answer_step6.ElectoralAddress.Postcode = this.member.Postcode
+        // postal address auto populated
+        if (this.member) this.answer_step6.PostalAddress.AddressLine1 = this.member.PostalAddress.AddressLine1
+        if (this.member) this.answer_step6.PostalAddress.AddressLine2 = this.member.PostalAddress.AddressLine2
+        if (this.member) this.answer_step6.PostalAddress.AddressLine3 = this.member.PostalAddress.AddressLine3
+        if (this.member) this.answer_step6.PostalAddress.Postcode = this.member.PostalAddress.Postcode
+        if (this.member) this.answer_step6.PostalAddress.State = this.member.PostalAddress.State
+        if (this.member) this.answer_step6.PostalAddress.Suburb = this.member.PostalAddress.Suburb
       } catch (error) {
         console.log('error' + error)
           const tempData = {
@@ -795,24 +1410,24 @@ export default {
     async onSubmit () {
       try {
         this.loadingSubmit = this.$loading.show()
-        const address = {
-          FirstName: this.member.FirstName,
-          LastName: this.member.LastName,
-          StreetNumber: this.answer_step6.ElectoralAddress.StreetNumber,
-          Street: this.answer_step6.ElectoralAddress.Street,
-          Postcode: this.answer_step6.ElectoralAddress.Postcode,
-          Suburb: this.answer_step6.ElectoralAddress.Suburb,
-          DateOfBirthDay: this.answers.DOB,
-          DateOfBirthMonth: this.answers.DOB_month,
-          DateOfBirthYear: this.answers.DOB_year
-        }
-        const postAddress = await axios.post('http://dev.nsw.liberal.org.au/LPNSWAPI/SurveyLookup/PostValidateAddress', address, {headers: {
-          Authorization: 'Bearer ' + this.token
-        }
-        })
-        if(postAddress.data.Message === 'Address can not be validated') {
-          throw new Error(postAddress.data.Message)
-        }
+        // const address = {
+        //   FirstName: this.member.FirstName,
+        //   LastName: this.member.LastName,
+        //   StreetNumber: this.answer_step6.ElectoralAddress.StreetNumber,
+        //   Street: this.answer_step6.ElectoralAddress.Street,
+        //   Postcode: this.answer_step6.ElectoralAddress.Postcode,
+        //   Suburb: this.answer_step6.ElectoralAddress.Suburb,
+        //   DateOfBirthDay: this.answers.DOB,
+        //   DateOfBirthMonth: this.answers.DOB_month,
+        //   DateOfBirthYear: this.answers.DOB_year
+        // }
+        // const postAddress = await axios.post('http://dev.nsw.liberal.org.au/LPNSWAPI/SurveyLookup/PostValidateAddress', address, {headers: {
+        //   Authorization: 'Bearer ' + this.token
+        // }
+        // })
+        // if(postAddress.data.Message === 'Address can not be validated') {
+        //   throw new Error(postAddress.data.Message)
+        // }
         const memberPayloads = {
           memberid: this.member.memberid,
           Prefix: this.member.Prefix, 
@@ -834,9 +1449,9 @@ export default {
             Postcode: this.answer_step6.ElectoralAddress.Postcode,
           },
           PostalAddress: {
-            StreetNumber: this.answer_step6.PostalAddress.StreetNumber,
-            Street: this.answer_step6.PostalAddress.Street,
-            StreetType: this.answer_step6.PostalAddress.StreetType,
+            AddressLine1: this.answer_step6.PostalAddress.AddressLine1,
+            AddressLine2: this.answer_step6.PostalAddress.AddressLine2,
+            AddressLine3: this.answer_step6.PostalAddress.AddressLine3,
             Suburb: this.answer_step6.PostalAddress.Suburb,
             State: this.answer_step6.PostalAddress.State,
             Postcode: this.answer_step6.PostalAddress.Postcode
@@ -853,7 +1468,7 @@ export default {
           status: this.submitForm.status,
           currentPage: 7,
           startDate: this.submitForm.startDate,
-          lastView: this.submitForm.lastView,
+          lastView: this.startDate,
           endDate: this.submitForm.endDate
         }
         const UD_fields = {
@@ -917,7 +1532,7 @@ export default {
           status: this.submitForm.status,
           currentPage: 5,
           startDate: this.submitForm.startDate,
-          lastView: this.submitForm.lastView,
+          lastView: this.startDate,
           endDate: this.submitForm.endDate
         }
         await axios.post('http://dev.nsw.liberal.org.au/LPNSWAPI/SurveyLookup/PostSurveyStatus', payload, {
@@ -947,6 +1562,12 @@ export default {
       } finally {
         this.loading.hide()
       }
+    },
+    getStreetTypeMapper () {
+      const st = this.street_types_mapper.find( el => {
+        return el.Abbreviation === this.member.ElectoralAddress.StreetType.toUpperCase()
+      })
+      this.answer_step6.ElectoralAddress.StreetType = st.street_type
     }
   }
 }
