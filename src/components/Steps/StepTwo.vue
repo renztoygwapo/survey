@@ -1,6 +1,6 @@
 <template>
   <section class="card-section form-page">
-    <ValidationObserver v-slot="{ handleSubmit }">
+    <ValidationObserver ref="stepTwo">
       <form class="w-full text-lg pb-10 ">
         <div class="bg-white w-100 inner-section" id="q4">
           <div class="container">
@@ -176,7 +176,7 @@
                     class="fa fa-angle-left ml-2"
                   /> Back
                 </button>
-                <button class="btn btn-primary mr-md-2 mb-2" @click.prevent="handleSubmit(onSubmit)">
+                <button class="btn btn-primary mr-md-2 mb-2" @click.prevent="onSubmit">
                   Next <i
                     class="fa fa-angle-right ml-2"
                   />
@@ -356,7 +356,7 @@ export default {
       loadingTwo: '',
       loadingSubmit: '',
       loadingBack: '',
-      startDate: '',
+      startDate: null,
       answer_step2: {
         State_Policy_Cost_Living: false,
         State_Policy_Environment: false,
@@ -515,6 +515,12 @@ export default {
     },
     async onSubmit () {
       try {
+        const isValid = await this.$refs.stepTwo.validate()
+        if(!isValid) {
+          const el = document.querySelector('.error')
+          el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'smooth' })
+          return false
+        }
         this.loadingSubmit = this.$loading.show()
         this.$store.commit('setProgress', 30)
         const payload = {

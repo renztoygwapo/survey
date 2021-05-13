@@ -1,6 +1,6 @@
 <template>
   <section class="card-section form-page">
-    <ValidationObserver v-slot="{ handleSubmit }">
+    <ValidationObserver ref="stepSix" tag="form">
       <form class="w-full text-lg pb-10 ">
         <div class="bg-white w-100 inner-section" id="q22">
           <div class="container">
@@ -174,7 +174,7 @@
                         <input id="same_postaladdress1" v-model="answer_step6.is_same_postal" type="checkbox">
                         Please tick this box if your postal address same as electoral roll details as above.
                       </label>
-                    </div> <label>Postal Address</label>
+                    </div>
                     <hr>
                     <h5>Postal Address</h5>
                     <div class="checkbox">
@@ -209,7 +209,6 @@
                             maxlength="40"
                             type="text"
                             class="form-control"
-                            :disabled="answer_step6.is_same_postal"
                             >
                         </div>
                       </div>
@@ -222,7 +221,6 @@
                             maxlength="40"
                             type="text"
                             class="form-control"
-                            :disabled="answer_step6.is_same_postal"
                             >
                         </div>
                       </div>
@@ -337,7 +335,7 @@
                     class="fa fa-angle-left ml-2"
                   /> Back
                 </button>
-                <button class="btn btn-primary mr-md-2 mb-2" @click.prevent="handleSubmit(onSubmit)">
+                <button class="btn btn-primary mr-md-2 mb-2" @click.prevent="onSubmit">
                   Next <i
                     class="fa fa-angle-right ml-2"
                   />
@@ -363,7 +361,6 @@ export default {
   },
   data () {
     return {
-      startDate: null,
       form: {
         street_name: '',
         street_type: '',
@@ -1322,6 +1319,7 @@ export default {
     await this.getMember()
     await this.getStreetTypeMapper()
     this.startDate = moment().format('MM-DD-YYYY h:mm')
+    // error finder
     window.scrollTo({
       top: 10,
       behavior: 'smooth'
@@ -1342,7 +1340,7 @@ export default {
       deep: true,
       handler () {
         if (this.answer_step6.is_same_postal) {
-          this.answer_step6.PostalAddress.AddressLine1 = this.answer_step6.ElectoralAddress.StreetNumber + ' ' + Street + ' ' + StreetType
+          this.answer_step6.PostalAddress.AddressLine1 = this.answer_step6.ElectoralAddress.StreetNumber + ' ' + this.answer_step6.ElectoralAddress.Street + ' ' + this.answer_step6.ElectoralAddress.StreetType
           this.answer_step6.PostalAddress.State = this.answer_step6.ElectoralAddress.State
           this.answer_step6.PostalAddress.Suburb = this.answer_step6.ElectoralAddress.Suburb
           this.answer_step6.PostalAddress.Postcode = this.answer_step6.ElectoralAddress.Postcode
@@ -1409,6 +1407,12 @@ export default {
     },
     async onSubmit () {
       try {
+        const isValid = await this.$refs.stepSix.validate()
+        if(!isValid) {
+          const el = document.querySelector('.error')
+          el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'smooth' })
+          return false
+        }
         this.loadingSubmit = this.$loading.show()
         // const address = {
         //   FirstName: this.member.FirstName,

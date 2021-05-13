@@ -1,6 +1,6 @@
 <template>
   <section class="card-section form-page">
-    <ValidationObserver v-slot="{ handleSubmit }">
+    <ValidationObserver ref="stepFive">
       <form class="w-full text-lg pb-10 ">
         <div class="bg-white w-100">
           <div class="container">
@@ -386,7 +386,7 @@
                     class="fa fa-angle-left ml-2"
                   /> Back
                 </button>
-                <button class="btn btn-primary mr-md-2 mb-2" @click.prevent="handleSubmit(onSubmit)">
+                <button class="btn btn-primary mr-md-2 mb-2" @click.prevent="onSubmit">
                   Next <i
                     class="fa fa-angle-right ml-2"
                   />
@@ -518,7 +518,7 @@ export default {
       holds_corporate_events_model: '',
       id: '',
       ck: '',
-      startDate,
+      startDate: null,
       loading: '',
       answer_step5: {
         Gender: '',
@@ -581,6 +581,12 @@ export default {
     },
     async onSubmit () {
       try {
+        const isValid = await this.$refs.stepFive.validate()
+        if(!isValid) {
+          const el = document.querySelector('.error')
+          el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'smooth' })
+          return false
+        }
         const load = this.$loading.show()
         const payload = {
           memberid: this.id,

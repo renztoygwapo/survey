@@ -59,8 +59,7 @@ export default {
     })
   },
   async mounted () {
-    this.initiateSettings()
-    // console.log(moment().format('MM-DD-YYYY h:mm'))
+    // this.initiateSettings()
     this.loading = this.$loading.show()
     this.id = this.$route.query.id
     this.ck = this.$route.query.ck

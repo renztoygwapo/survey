@@ -62,7 +62,7 @@
             </div>
           </div>
         </div>
-        <ValidationObserver v-slot="{ handleSubmit }">
+        <ValidationObserver ref="stepOne">
           <form class="w-full text-lg pb-10 " @submit.prevent="handleSubmit(onSubmit)">
             <div class="bg-grey w-100 inner-section" id="q1">
               <div class="container">
@@ -435,7 +435,7 @@
                       Your Progress
                     </h4>
                     <Progress :width="width" />
-                    <button class="btn btn-primary mr-md-2 mb-2" @click="handleSubmit(onSubmit)">
+                    <button class="btn btn-primary mr-md-2 mb-2" @click="onSubmit">
                       Next <i
                         class="fa fa-angle-right ml-2"
                       />
@@ -588,6 +588,12 @@ export default {
     },
     async onSubmit () {
       try {
+        const isValid = await this.$refs.stepOne.validate()
+        if(!isValid) {
+          const el = document.querySelector('.error')
+          el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'smooth' })
+          return false
+        }
         const loader = this.$loading.show()
         const payload = {
           memberid: this.id,

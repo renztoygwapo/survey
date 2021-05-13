@@ -1,6 +1,6 @@
 <template>
   <section class="card-section form-page">
-    <ValidationObserver v-slot="{ handleSubmit }">
+    <ValidationObserver ref="stepSeven" tag="form">
       <form class="w-full text-lg pb-10 ">
           <div class="bg-white w-100">
             <div class="container">
@@ -178,7 +178,7 @@
                     class="fa fa-angle-left ml-2"
                   /> Back
                 </button>
-                <button class="btn btn-primary mr-md-2 mb-2" @click.prevent="handleSubmit(submitSurvey)">
+                <button class="btn btn-primary mr-md-2 mb-2" @click.prevent="submitSurvey">
                   Submit <i
                     class="fa fa-angle-right ml-2"
                   />
@@ -294,8 +294,13 @@ export default {
   methods: {
     async submitSurvey (valid) {
       try {
-         this.submitLoading = this.$loading.show()
-        
+        const isValid = await this.$refs.stepSeven.validate()
+        if(!isValid) {
+          const el = document.querySelector('.error')
+          el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'smooth' })
+          return false
+        }
+        this.submitLoading = this.$loading.show()
         if(!this.affirm) {
           this.$toast.error('Please affirm you are not a foreign donor', {
           position: "top-right",
