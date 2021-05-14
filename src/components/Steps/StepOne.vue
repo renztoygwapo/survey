@@ -16,9 +16,6 @@
             <br>
             <div class="row">       
               <div class="col-md-12">
-                <h5 class="mb-2" style="font-weight: bold;">
-                  1 March 2021
-                </h5>
                 <p class="mb-3">
                   Dear {{ this.fullName }}
                 </p>
