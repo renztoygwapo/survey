@@ -3,6 +3,7 @@ export const strict = false
 /* eslint-disable */
 import Vue from 'vue'
 import Vuex from 'vuex'
+import moment from 'moment'
 
 Vue.use(Vuex)
 
@@ -20,8 +21,8 @@ export default new Vuex.Store({
       surveyid: 'Survey_Supporter21',
       status: 'inProgress',
       currentPage: 1,
-      startDate: '04-02-2021 09:00',
-      lastView: '03-02-2021 09:00',
+      startDate: moment().format('MM-DD-YYYY h:mm'),
+      lastView: '',
       endDate: ''
     },
     answers: {},

@@ -211,23 +211,23 @@ export default {
       other_reason: false,
       prefered_donation_model: '',
       prefered_donations: [
-        { text: 'NSW Liberal Website nsw.liberal.org.au', value: 'website' },
+        { text: 'NSW Liberal Website nsw.liberal.org.au', value: 'Website' },
         { text: 'Via email I receive from you', value: 'email' },
         { text: 'Over the phone', value: 'phone' },
-        { text: 'Via appeals I receive from you in the post', value: 'appeals' }
+        { text: 'Via appeals I receive from you in the post', value: 'Appeals' }
       ],
       when_to_donate_model: '',
       when_to_donate: [
-        { text: 'I am happy to be asked as needs arise and respond as my capacity allows', value: 'election' },
-        { text: "I like to make a regular donation to build the Party's war chest for the next election", value: 'regular donor' },
-        { text: 'I like to support at election times as I know how important this is', value: 'support_as_important' },
-        { text: "I don't donate at all, as I support the party in other ways", value: "doesn't donate" }
+        { text: 'I am happy to be asked as needs arise and respond as my capacity allows', value: 'Election' },
+        { text: "I like to make a regular donation to build the Party's war chest for the next election", value: 'Regular Donor' },
+        { text: 'I like to support at election times as I know how important this is', value: 'Support_is_important' },
+        { text: "I don't donate at all, as I support the party in other ways", value: "Doesn't Donate" }
       ],
       regular_givers_model: '',
       regular_givers: [
         { text: 'I already donate every month', value: 'already RG' },
-        { text: 'I would like to consider becoming a regular (monthly) donor and would like more information', value: 'prospect' },
-        { text: 'I prefer different options to support at this stage', value: 'support other' }
+        { text: 'I would like to consider becoming a regular (monthly) donor and would like more information', value: 'Prospect' },
+        { text: 'I prefer different options to support at this stage', value: 'Support other' }
       ],
       id: '',
       ck: '',

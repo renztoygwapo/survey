@@ -421,19 +421,19 @@ export default {
       about_you_model: [],
       about_you: [
         {
-          value: 'male',
+          value: 'Male',
           text: 'Male'
         },
         {
-          value: 'female',
+          value: 'Female',
           text: 'Female'
         },
         {
-          value: 'other',
+          value: 'Other',
           text: 'Other'
         },
         {
-          value: 'not to answer',
+          value: 'Not to answer',
           text: 'Prefer not to answer'
         }
       ],
@@ -447,11 +447,11 @@ export default {
           text: 'Single'
         },
         {
-          value: 'widow/er',
+          value: 'Widow/er',
           text: 'Widow/Widower'
         },
         {
-          value: 'other',
+          value: 'Other',
           text: 'Other'
         }
       ],
@@ -461,38 +461,38 @@ export default {
           text: 'Children'
         },
         {
-          value: 'grandchildren',
+          value: 'Grandchildren',
           text: 'Children and Grandchildren'
         },
         {
-          value: 'no children',
+          value: 'No children',
           text: 'No Children'
         },
         {
-          value: 'dependant others',
+          value: 'Dependant others',
           text: 'Dependant Others'
         }
       ],
       family_composition_model: '',
       work_status: [
         {
-          value: 'fulltime',
+          value: 'Fulltime',
           text: 'Employed Full Time'
         },
         {
-          value: 'part time',
+          value: 'Part time',
           text: 'Employed Part Time'
         },
         {
-          value: 'unemployed',
+          value: 'Unemployed',
           text: 'Unepmloyed'
         },
         {
-          value: 'retired',
+          value: 'Retired',
           text: 'Retired'
         },
         {
-          value: 'homeduties',
+          value: 'Homeduties',
           text: 'Home Duties'
         }
       ],

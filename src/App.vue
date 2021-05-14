@@ -23,7 +23,6 @@ import StepSeven from './components/Steps/StepSeven.vue'
 import Thankyou from './components/Steps/thank-you.vue'
 import { mapGetters } from 'vuex'
 import Loading from 'vue-loading-overlay'
-import moment from 'moment'
 import 'vue-loading-overlay/dist/vue-loading.css'
 export default {
   components: {
@@ -59,7 +58,7 @@ export default {
     })
   },
   async mounted () {
-    // this.initiateSettings()
+    this.initiateSettings()
     this.loading = this.$loading.show()
     this.id = this.$route.query.id
     this.ck = this.$route.query.ck
