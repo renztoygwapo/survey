@@ -75,6 +75,9 @@ export default new Vuex.Store({
     },
     setDonationResponse (state, payload) {
       state.donation = payload
+    },
+    setSubmitForm (state, payload) {
+      state.submitForm = payload
     }
   },
   actions: {

@@ -119,7 +119,7 @@
                 </div>
                 <div class="row">
                   <div class="checkbox">
-                  <div>
+                  <div v-if="answer_step7.donation.donation_amount">
                     <ValidationProvider name="other" rules="required_affirm" v-slot="{ errors }">
                       <input id="affirm" v-model="affirm" type="checkbox" value="">
                       <label for="affirm" class="col-form-label">I affirm I am not a Foreign Donor. Refer to the <a href="https://www.elections.nsw.gov.au/Funding-and-disclosure/Political-donations/Unlawful-political-donations/Prohibited-donors" target="_blank">Donor Eligibility and Disclosure Warning</a> for further information.</label>
@@ -301,7 +301,7 @@ export default {
           return false
         }
         this.submitLoading = this.$loading.show()
-        if(!this.affirm) {
+        if(!this.affirm && this.answer_step7.donation.donation_amount) {
           this.$toast.error('Please affirm you are not a foreign donor', {
           position: "top-right",
           timeout: 5000,
@@ -317,23 +317,28 @@ export default {
           rtl: false
         })
         window.scrollTo({
-          top: 10,
+        top: 10,
           behavior: 'smooth'
         })
         }
-        const donationPayload = {
-          memberid: this.id,
-          donation: this.answer_step7.donation,
-          donationsettings: this.donation_settings
+        // check if doesnt donate
+        if (this.answer_step7.donation.donation_amount) {
+          const donationPayload = {
+            memberid: this.id,
+            donation: this.answer_step7.donation,
+            donationsettings: this.donation_settings
+          }
+          const donation_result = await axios.post('http://dev.nsw.liberal.org.au/LPNSWAPI/SurveyLookup/PostSurveyDonate', donationPayload, {
+          headers: {
+            Authorization: 'Bearer ' + this.token
+          }
+          })
+          if(donation_result.data.errors) {
+            throw new Error(donation_result.data.errors[0])
+          }
         }
-        const donation_result = await axios.post('http://dev.nsw.liberal.org.au/LPNSWAPI/SurveyLookup/PostSurveyDonate', donationPayload, {
-        headers: {
-          Authorization: 'Bearer ' + this.token
-        }
-        })
-        if(donation_result.data.errors) {
-          throw new Error(donation_result.data.errors[0])
-        }
+        // end of no donation
+        
         const payload = {
           memberid: this.id,
           surveyid: this.submitForm.surveyid,

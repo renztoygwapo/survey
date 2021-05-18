@@ -485,7 +485,7 @@ export default {
         },
         {
           value: 'Unemployed',
-          text: 'Unepmloyed'
+          text: 'Unemployed'
         },
         {
           value: 'Retired',

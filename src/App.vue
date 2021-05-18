@@ -24,6 +24,7 @@ import Thankyou from './components/Steps/thank-you.vue'
 import { mapGetters } from 'vuex'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
+import moment from 'moment'
 export default {
   components: {
     StepOne,
@@ -59,6 +60,7 @@ export default {
   },
   async mounted () {
     this.initiateSettings()
+    this.setSubmitForm()
     this.loading = this.$loading.show()
     this.id = this.$route.query.id
     this.ck = this.$route.query.ck
@@ -154,6 +156,15 @@ export default {
     progressBarWidth () {
       const payload = (this.step - 1) * 15
       this.$store.commit('setProgress', payload)
+    },
+    setSubmitForm () {
+      const payload = {
+        memberid: '',
+        surveyid: 'Survey_Supporter21',
+        status: 'inProgress',
+        startDate: moment().format('MM-DD-YYYY h:mm')
+      }
+      this.$store.commit('setSubmitForm', payload)
     }
   }
 }
