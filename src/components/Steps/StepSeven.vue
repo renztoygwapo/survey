@@ -10,10 +10,10 @@
                     SUPPORT US FOR THE NEXT FEDERAL ELECTION
                   </h2>
                   <p>
-                    Our next federal campaign is just around the corner, and preparations are underway
+                    Our next federal campaign is just around the corner, and preparations are underway.
                   </p>
                   <p>
-                    Your support will ensure we can run the strongest campaign possible, as the Coalition seeks a fourth term in office
+                    Your support will ensure we can run the strongest campaign possible, as the Coalition seeks a fourth term in office.
                   </p>
                 </div><!-- col-md-12 -->
               </div><!-- row -->
@@ -166,7 +166,7 @@
             <div class="row">
               <div class="col-md-12 text-center">
                 <h6 class="pt-2">
-                  Please submit the button below to complete the survey.
+                   Please click the submit button below to complete the survey.
                 </h6>
                 <h6 class="mb-3">
                   Thank you for your time and contribution.
@@ -336,6 +336,7 @@ export default {
           if(donation_result.data.errors) {
             throw new Error(donation_result.data.errors[0])
           }
+          this.$store.commit('setDonationResponse', donation_result ? donation_result.data : {})
         }
         // end of no donation
         
@@ -370,7 +371,6 @@ export default {
           Authorization: 'Bearer ' + this.token
         }
         })
-        this.$store.commit('setDonationResponse', donation_result.data)
         this.$store.commit('setProgress', 100)
         this.$store.commit('setCurrentPage', result.data.Answers.Currentpage)
         this.$store.commit('setAnswers', result.data.Answers)

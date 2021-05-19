@@ -22,7 +22,7 @@
                   15. Are you:
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
-                  Please select one preference
+                  Please select one preference.
                 </h6>
                 <div v-for="item in about_you" :key="item.value" class="form-check form-check-inline">
                   <input
@@ -238,7 +238,7 @@
                   17. Which of the following best describes your relationship status
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
-                  Please select the option that most applies to you
+                  Please select the option that most applies to you.
                 </h6>
                 <!-- custom check container -->
                 <div v-for="relation in relationship_status" :key="relation.value" class="form-check form-check-inline">
@@ -266,7 +266,7 @@
                   18. What is the composition of your family
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
-                  Please select the option that most applies to you
+                  Please select the option that most applies to you.
                 </h6>
                 <!-- custom check container -->
                 <div v-for="family in family_composition" :key="family.value" class="form-check form-check-inline">
@@ -293,7 +293,7 @@
                   19. Which of the following best describes your work status
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
-                  Please select the option that most applies to you
+                  Please select the option that most applies to you.
                 </h6>
                 <!-- custom check container -->
                 <div v-for="work in work_status" :key="work.value" class="form-check form-check-inline">
@@ -321,7 +321,7 @@
                   20. The NSW Liberal Party regularly holds corporate events with our State and Federal MPs
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
-                  Please select the option that most applies to you
+                  Please select the option that most applies to you.
                 </h6>
                 <!-- custom check container -->
                 <div v-for="hold in holds_corporate_events" :key="hold.value" class="form-check">
@@ -349,7 +349,7 @@
                   21. If you are interested in attending corporate events please provide us with you company name and your title
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
-                  This information is not mandatory, however supplying it will help us to invite you to events that are of interest to you and your industry
+                  This information is not mandatory, however supplying it will help us to invite you to events that are of interest to you and your industry.
                 </h6>
                 <!-- custom check container -->
                 <div class="row">

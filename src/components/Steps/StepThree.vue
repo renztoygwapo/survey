@@ -26,7 +26,7 @@
                   7. What is the main reason you donate or would donate to the NSW Liberal Party?
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
-                  Please select all that apply
+                  Please select all that apply.
                 </h6>
 
                 <div v-for="item in reasons_to_donate" :key="item.id" class="checkbox">
@@ -63,7 +63,7 @@
                   8. What is your preferred or would be your method of donating to?
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
-                  Please select one preference
+                  Please select one preference.
                 </h6>
                 <div v-for="item in prefered_donations" :key="item.value" class="form-check form-check-inline">
                   <input
@@ -89,7 +89,7 @@
                   9. When do you prefer to donate ?
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
-                  Please select one preference
+                  Please select one preference.
                 </h6>
 
                 <div v-for="item in when_to_donate" :key="item.value" class="form-check">
@@ -113,10 +113,10 @@
             <div class="row">
               <div class="col-md-12">
                 <h3 class="secondary-blue-text mb-2">
-                  10. Our Regular Givers are an especially valued group who help us with regular donations. Are you interest in a convenient way to support us ahead of the next NSW State Election ?
+                  10. Our Regular Givers are an especially valued group who help us with regular donations. Are you interested in a convenient way to support us ahead of the next NSW State Election ?
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
-                  Please select one preference
+                  Please select one preference.
                 </h6>
 
                 <div v-for="item in regular_givers" :key="item.value" class="form-check">

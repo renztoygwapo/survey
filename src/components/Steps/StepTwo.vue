@@ -10,7 +10,7 @@
                   4. What policies at a NSW State level are most important to you ?
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
-                  Please select the most important reasons (up to 3)
+                  Please select the most important reasons (up to 3).
                 </h6>
                 <!-- custom check container -->
                 <div v-for="item in nsw_policies" :key="item.id" class="checkbox">
@@ -48,7 +48,7 @@
                   5. What policies at a Federal Level are most important to you ?
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
-                  Please select the most important reasons (up to 3)
+                  Please select the most important reasons (up to 3).
                 </h6>
                 <!-- custom check container -->
                 <div v-for="item in federal_policies" :key="item.id" class="checkbox">

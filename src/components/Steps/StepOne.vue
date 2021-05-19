@@ -69,7 +69,7 @@
                       1. Why do you support the NSW Liberal Party?
                     </h3>
                     <h6 class="border-bottom pb-3 mb-4">
-                      Please select the most important reasons (up to 3)
+                      Please select the most important reasons (up to 3).
                     </h6>
                     <!-- custom check container -->
                     <div v-for="item in nsw_supports" :key="item.id" class="checkbox">
@@ -348,7 +348,7 @@
                     <!-- radio box section-->
                     <p class="mb-2 font-weight-bold">
                       The Morrison Government is concentrating on issues
-                      important to you and your family
+                      important to you and your family.
                     </p>
                     <div class="radio-box-con mb-4 d-flex justify-content-md-start justify-content-sm-center">
                       <div class="radio-box">

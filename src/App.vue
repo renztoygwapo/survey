@@ -66,6 +66,7 @@ export default {
     this.ck = this.$route.query.ck
     await this.getToken()
     await this.getMember()
+    await this.postSurvey()
     await this.getStreetTypes()
     await this.getFields()
     if(this.step) {
@@ -152,6 +153,19 @@ export default {
       } finally {
         this.loading.hide()
       }
+    },
+    async postSurvey () {
+      const payload = {
+        memberid: this.$route.query.id,
+        surveyid: 'Survey_Supporter21',
+        status: 'inProgress',
+        startDate: moment().format('MM-DD-YYYY h:mm')
+      }
+      await axios.post('http://dev.nsw.liberal.org.au/LPNSWAPI/SurveyLookup/PostSurveyStatus', payload, {
+        headers: {
+          Authorization: 'Bearer ' + this.token
+        }
+      })
     },
     progressBarWidth () {
       const payload = (this.step - 1) * 15

@@ -7,10 +7,10 @@
             <div class="row">
               <div class="col-md-12">
                 <h3 class="secondary-blue-text mb-2">
-                  11. Below are all the ways you can further support the NSW Liberal Party
+                  11. Below are all the ways you can further support the NSW Liberal Party:
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
-                  Please select any you are personally interested in
+                  Please select any you are personally interested in.
                 </h6>
                 <!-- custom check container -->
                 <div v-for="item in support" :key="item.id" class="checkbox">
@@ -41,7 +41,7 @@
                   A special society is being created for those who have made this important decision.
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
-                  Please select one preference
+                  Please select one preference.
                 </h6>
                 <!-- custom check container -->
                 <div v-for="item in gift_will" :key="item.value" class="form-check">
@@ -70,7 +70,7 @@
                   Please select one preference.
                 </h6>
 
-                <p>A will is to provide for family/friends</p>
+                <p style="font-weight: bold;">A will is to provide for family/friends.</p>
                 <div class="radio-box-con mb-4 d-flex justify-content-md-start justify-content-sm-center">
                   <div class="radio-box">
                     <input class="input-radio" type="radio" name="radio1" v-model="answer_step4.GIW_Provide_Family" value="Agree">
@@ -86,7 +86,7 @@
                   </div>
                 </div>
 
-                <p>It's also good to leave a gift to a cause if you can</p>
+                <p style="font-weight: bold;">It's also good to leave a gift to a cause if you can.</p>
                 <div class="radio-box-con mb-4 d-flex justify-content-md-start justify-content-sm-center">
                   <div class="radio-box">
                     <input class="input-radio" type="radio" name="radio2" v-model="answer_step4.GIW_Good_Cause" value="Agree">
@@ -102,7 +102,7 @@
                   </div>
                 </div>
 
-                <p>It's easy to leave a gift or update a will</p>
+                <p style="font-weight: bold;">It's easy to leave a gift or update a will.</p>
                 <div class="radio-box-con mb-4 d-flex justify-content-md-start justify-content-sm-center">
                   <div class="radio-box">
                     <input class="input-radio" type="radio" name="radio3" v-model="answer_step4.GIW_Ease" value="Agree">
@@ -118,7 +118,7 @@
                   </div>
                 </div>
 
-                <p>I may have enough to include a gift to a cause that I believe in</p>
+                <p style="font-weight: bold;">I may have enough to include a gift to a cause that I believe in.</p>
                 <div class="radio-box-con mb-4 d-flex justify-content-md-start justify-content-sm-center">
                   <div class="radio-box">
                     <input class="input-radio" type="radio" name="radio4" v-model="answer_step4.GIW_Enough_Resource" value="Agree">
@@ -134,7 +134,7 @@
                   </div>
                 </div>
 
-                <p>I would like to be thanked in my life for a gift</p>
+                <p style="font-weight: bold;">I would like to be thanked in my life for a gift.</p>
                 <div class="radio-box-con mb-4 d-flex justify-content-md-start justify-content-sm-center">
                   <div class="radio-box">
                     <input class="input-radio" type="radio" name="radio5" v-model="answer_step4.GIW_Thanks" value="Agree">
@@ -162,7 +162,7 @@
                   14. NSW Liberal Party is currently developing new resources for our supporters. Which ones would you like to know more about?
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
-                  Please select any that you are personally interested in
+                  Please select any that you are personally interested in.
                 </h6>
 
                 <!-- custom check container -->

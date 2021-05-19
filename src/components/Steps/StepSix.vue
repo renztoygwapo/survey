@@ -10,7 +10,7 @@
                   22. We would like to stay in touch with you and keep you updated
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
-                  Please confirm or update your details below
+                  Please confirm or update your details below.
                 </h6>
                 <!-- custom check container -->
                 <div class="row">
@@ -172,14 +172,14 @@
                     <div class="checkbox">
                       <label>
                         <input id="same_postaladdress1" v-model="answer_step6.is_same_postal" type="checkbox">
-                        Please tick this box if your postal address same as electoral roll details as above.
+                        Please tick this box if your postal address is the same as the electoral roll details as above.
                       </label>
                     </div>
                     <hr>
                     <h5>Postal Address</h5>
                     <div class="checkbox">
                       <label><input id="applicant1_chkuse_pobox" type="checkbox">
-                        My postal address is a PO Box address
+                        My postal address is a PO Box address.
                       </label>
                     </div>
                     <div class="row">
@@ -307,12 +307,12 @@
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
                   A key reason for our success is our foundational principles of individual freedom, free enterprise and equality of opportunity,
-                  which are still relevant today as they were in 1945
+                  which are still relevant today as they were in 1945.
                 </h6>
                 <div class="checkbox">
                   <div>
                     <input id="individual_freedom" v-model="answer_step6.Confirm_Mission" type="checkbox" value="">
-                    <label for="individual_freedom" class="col-form-label">I am Liberal because I believe in individual freedom and free enterprise</label>
+                    <label for="individual_freedom" class="col-form-label">I am Liberal because I believe in individual freedom and free enterprise.</label>
                   </div>
                 </div>
               </div><!-- col-md-12 -->
