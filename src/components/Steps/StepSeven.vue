@@ -121,7 +121,7 @@
                   <div class="checkbox">
                   <div v-if="answer_step7.donation.donation_amount">
                     <ValidationProvider name="other" rules="required_affirm" v-slot="{ errors }">
-                      <input id="affirm" v-model="affirm" type="checkbox" value="">
+                      <input id="affirm" v-model="answer_step7.Donation_Consent" type="checkbox" value="">
                       <label for="affirm" class="col-form-label">I affirm I am not a Foreign Donor. Refer to the <a href="https://www.elections.nsw.gov.au/Funding-and-disclosure/Political-donations/Unlawful-political-donations/Prohibited-donors" target="_blank">Donor Eligibility and Disclosure Warning</a> for further information.</label>
                       <p class="error">{{ errors[0] }}</p>
                   </ValidationProvider>
@@ -301,7 +301,7 @@ export default {
           return false
         }
         this.submitLoading = this.$loading.show()
-        if(!this.affirm && this.answer_step7.donation.donation_amount) {
+        if(!this.answer_step7.Donation_Consent && this.answer_step7.donation.donation_amount) {
           this.$toast.error('Please affirm you are not a foreign donor', {
           position: "top-right",
           timeout: 5000,

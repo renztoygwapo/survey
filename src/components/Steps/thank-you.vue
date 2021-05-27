@@ -17,19 +17,27 @@
                 understand your priorities, needs and help you have the connection with our Party in the
                 way that works best for you.
               </p>
-              <p>
+              <p v-if="donation">
                 You will shortly receive a confirmation email with details, along with your receipt for
                 payment of your Donation.
               </p>
-              <p>
+              <p v-if="donation">
                 If you have any questions regarding the survey or your donation, please contact our
                 Membership Team by email at <a
-                  href="mailto: membership@nswliberal.org.qu"
-                >membership@nsw.liberal.org.au</a> or
+                  href="mailto:chq@nsw.liberal.org.au"
+                >chq@nsw.liberal.org.au</a> or
                 <br>by
                 phone on <a
-                  href="tel:(02) 8356
-                                    0300"
+                  href="tel:(02)83560300"
+                >(02) 8356 0300.</a>
+              </p>
+              <p v-else>
+                If you have any questions regarding the survey, please contact our Team by email at <a
+                  href="mailto:chq@nsw.liberal.org.au"
+                >chq@nsw.liberal.org.au</a> or
+                <br>by
+                phone on <a
+                  href="tel:(02)83560300"
                 >(02) 8356 0300.</a>
               </p>
               <template v-if="donation">

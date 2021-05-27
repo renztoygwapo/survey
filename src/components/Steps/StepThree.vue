@@ -60,7 +60,7 @@
             <div class="row">
               <div class="col-md-12">
                 <h3 class="secondary-blue-text mb-2">
-                  8. What is your preferred or would be your method of donating to?
+                  8. What is your preferred or would be your method of donating to us?
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
                   Please select one preference.
@@ -232,6 +232,7 @@ export default {
       id: '',
       ck: '',
       loading: '',
+      loadingSubmit: null,
       startDate: null,
       answer_step3: {
         Donate_Reason_RemainState: false,
@@ -316,7 +317,7 @@ export default {
           el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'smooth' })
           return false
         }
-        const load = this.$loading.show()
+        this.loadingSubmit = this.$loading.show()
         const payload = {
           memberid: this.id,
           surveyid: this.submitForm.surveyid,
@@ -348,7 +349,6 @@ export default {
           Authorization: 'Bearer ' + this.token
         }
         })
-        load.hide()
         this.$store.commit('setCurrentPage', result.data.Answers.Currentpage)
         this.$store.commit('setAnswers', result.data.Answers)
         window.scrollTo({
@@ -363,7 +363,7 @@ export default {
           behavior: 'smooth'
         })
       } finally {
-        this.loading.hide()        
+        this.loadingSubmit.hide()        
       }
     },
     async goBack () {

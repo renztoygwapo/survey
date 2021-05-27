@@ -60,7 +60,7 @@
           </div>
         </div>
         <ValidationObserver ref="stepOne">
-          <form class="w-full text-lg pb-10 " @submit.prevent="handleSubmit(onSubmit)">
+          <form class="w-full text-lg pb-10 " @submit.prevent="onSubmit">
             <div class="bg-grey w-100 inner-section" id="q1">
               <div class="container">
                 <div class="row">
@@ -432,7 +432,7 @@
                       Your Progress
                     </h4>
                     <Progress :width="width" />
-                    <button class="btn btn-primary mr-md-2 mb-2" @click="onSubmit">
+                    <button class="btn btn-primary mr-md-2 mb-2" @click.prevent="onSubmit">
                       Next <i
                         class="fa fa-angle-right ml-2"
                       />

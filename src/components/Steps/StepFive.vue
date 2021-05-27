@@ -519,7 +519,10 @@ export default {
       id: '',
       ck: '',
       startDate: null,
+      loadingCurrent: null,
       loading: '',
+      loadingSubmit: null,
+      loadingBack: null,
       answer_step5: {
         Gender: '',
         DOB: '',
@@ -554,7 +557,7 @@ export default {
   methods: {
     async getCurrentFields () {
       try {
-        this.loading = this.$loading.show()
+        this.loadingCurrent = this.$loading.show()
         const res = await axios.get('http://dev.nsw.liberal.org.au/LPNSWAPI/SurveyLookup/GetUDFields?id=' + this.id + '&ck=' + this.ck + '&surveyTableName=Survey_Supporter21', {
         headers: {
           Authorization: 'Bearer ' + this.token
@@ -576,7 +579,7 @@ export default {
         console.log('error' + error)
         this.$store.commit('setCurrentPage', 1)
       } finally {
-        this.loading.hide()
+        this.loadingCurrent.hide()
       }
     },
     async onSubmit () {
@@ -587,7 +590,7 @@ export default {
           el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'smooth' })
           return false
         }
-        const load = this.$loading.show()
+        this.loadingSubmit = this.$loading.show()
         const payload = {
           memberid: this.id,
           surveyid: this.submitForm.surveyid,
@@ -619,7 +622,6 @@ export default {
           Authorization: 'Bearer ' + this.token
         }
         })
-        load.hide()
         this.$store.commit('setCurrentPage', result.data.Answers.Currentpage)
         this.$store.commit('setAnswers', result.data.Answers)
         window.scrollTo({
@@ -635,12 +637,12 @@ export default {
           behavior: 'smooth'
         })
       } finally {
-        this.loading.hide()
+        this.loadingSubmit.hide()
       }
     },
     async goBack () {
       try {
-        this.loading = this.$loading.show()
+        this.loadingBack = this.$loading.show()
         const payload = {
           memberid: this.id,
           surveyid: this.submitForm.surveyid,
@@ -675,7 +677,7 @@ export default {
           behavior: 'smooth'
         })
       } finally {
-        this.loading.hide()
+        this.loadingBack.hide()
       }
     }
   }

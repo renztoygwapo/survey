@@ -38,7 +38,7 @@
                 <h3 class="secondary-blue-text mb-2">
                   12. A gift in a Will, no matter what size, is one of the most valued legacies to show your involvement with the Party.
                   All gifts are appreciated as they represent the final and important wishes of our community.
-                  A special society is being created for those who have made this important decision.
+                  A special fellowship is being created for those who have made this important decision.
                 </h3>
                 <h6 class="border-bottom pb-3 mb-4">
                   Please select one preference.
@@ -232,7 +232,6 @@ export default {
         two: ''
       },
       liberal_supporter: null,
-      loading: '',
       policies: [],
       resource_supporter: [],
       federal: [],
@@ -284,7 +283,7 @@ export default {
         },
         {
           value: 'Society',
-          text: 'No I did not know about the Society and would like to know more',
+          text: 'No I did not know about the fellowship and would like to know more',
           checked: false,
           disabled: false
         },
@@ -315,12 +314,15 @@ export default {
         { id: 'GIW_Affairs_Checklist', text: 'Affairs in order checklist - a free self audit of important life matters', checked: false, disabled: false },
         { id: 'GIW_Affairs_Guidebook', text: 'Affairs in order guidebook - a free resource', checked: false, disabled: false },
         { id: 'GIW_Willservice', text: 'Free will service', checked: false, disabled: false },
-        { id: 'GIW_Society_info', text: 'A Society for involving and thanking supporters', checked: false, disabled: false },
+        { id: 'GIW_Society_info', text: 'A fellowship for involving and thanking supporters', checked: false, disabled: false },
         { id: 'GIW_No_Resource', text: 'None of the above', checked: false, disabled: false }
       ],
       subscribe_newsletter: null,
       id: '',
       ck: '',
+      loadingSubmit: null,
+      loadingCurrent: null,
+      loadingBack: null,
       startDate: '',
       answer_step4: {
         Support_NSW_Membership: false,
@@ -370,7 +372,7 @@ export default {
     },
     async getCurrentFields () {
       try {
-        this.loading = this.$loading.show()
+        this.loadingCurrent = this.$loading.show()
         const res = await axios.get('http://dev.nsw.liberal.org.au/LPNSWAPI/SurveyLookup/GetUDFields?id=' + this.id + '&ck=' + this.ck + '&surveyTableName=Survey_Supporter21', {
         headers: {
           Authorization: 'Bearer ' + this.token
@@ -405,7 +407,7 @@ export default {
       } catch (error) {
         this.$store.commit('setCurrentPage', 1)
       } finally {
-        this.loading.hide()
+        this.loadingCurrent.hide()
       }
     },
     inputChecker () {
@@ -444,7 +446,7 @@ export default {
           el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'smooth' })
           return false
         }
-        const load = this.$loading.show()
+        this.loadingSubmit = this.$loading.show()
         const payload = {
           memberid: this.id,
           surveyid: this.submitForm.surveyid,
@@ -476,7 +478,6 @@ export default {
           Authorization: 'Bearer ' + this.token
         }
         })
-        load.hide()
         this.$store.commit('setCurrentPage', result.data.Answers.Currentpage)
         this.$store.commit('setAnswers', result.data.Answers)
         window.scrollTo({
@@ -492,12 +493,12 @@ export default {
           behavior: 'smooth'
         })
       } finally {
-        this.loading = this.$loading.hide()
+        this.loadingSubmit.hide()
       }
     },
     async goBack () {
       try {
-        this.loading = this.$loading.show()
+        this.loadingBack = this.$loading.show()
         const payload = {
           memberid: this.id,
           surveyid: this.submitForm.surveyid,
@@ -532,7 +533,7 @@ export default {
           behavior: 'smooth'
         })
       } finally {
-        this.loading.hide()
+        this.loadingBack.hide()
       }
     }
   },
