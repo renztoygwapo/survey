@@ -48,9 +48,9 @@
                 <h3 class="secondary-blue-text mb-2">
                   16. What is your date of birth?
                 </h3>
-                <!-- <h6 class="border-bottom pb-3 mb-4">
-                  Please enter one or both
-                </h6> -->
+                <h6 class="border-bottom pb-3 mb-4">
+                  Optional
+                </h6>
                 <!-- custom check container -->
                 <div class="row">
                   <div class="col-md-2">

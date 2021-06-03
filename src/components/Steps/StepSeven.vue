@@ -33,11 +33,16 @@
                     *I would like to donate
                   </p>
                   <div class="radio-box-con mb-4 d-flex justify-content-md-start justify-content-sm-center">
-                    <div v-for="donate in donations" :key="donate.value" class="radio-box">
+                    <div v-for="donate in donations" :key="donate.value" class="radio-box" @click="noOtherDonate">
                       <input class="input-radio" type="radio" v-model="answer_step7.donation.donation_amount" name="donate_radio" :value="donate.value">
                       <label for="">{{ donate.label }}</label>
                     </div>
-                    <div class="radio-box" v-if="answer_step7.donation.donation_amount">
+                    <div class="radio-box" @click="otherDonate">
+                      <!-- other donate -->
+                      <input type="radio" class="input-radio" v-model="answer_step7.donation.donation_amount" name="other_donate" id="other_donate">
+                      <label for="">Other</label>
+                    </div>
+                    <div class="radio-box" v-if="answer_step7.donation.donation_amount" @click="noOtherDonate">
                       <!-- dont want to donate -->
                       <input type="radio" class="input-radio" v-model="answer_step7.donation.donation_amount" :value="0" name="dont_donate" id="dont_donate">
                       <label for="">I don't want to Donate</label>
@@ -45,11 +50,11 @@
                   </div>
                 </div>
               </div>
-              <div v-if="answer_step7.donation.donation_amount === 1" class="row mt-3">
+              <div v-if="other_donate" class="row mt-3">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label>Other Amount</label>
-                    <input id="amount" type="number" class="form-control" placeholder="Other Amount" v-model="answer_step7.donation.donation_amount">
+                    <input id="text" type="text" class="form-control" placeholder="Other Amount" v-model="answer_step7.donation.donation_amount">
                   </div>
                 </div>
               </div>
@@ -203,6 +208,7 @@ export default {
   },
   data () {
     return {
+      other_donate: 0,
       affirm: null,
       amount_donate: null,
       feedback_message: '',
@@ -229,10 +235,6 @@ export default {
         {
           label: '$1000',
           value: 1000
-        },
-        {
-          label: 'Other',
-          value: 1
         }
       ],
       selected: 'first',
@@ -292,6 +294,12 @@ export default {
     })
   },
   methods: {
+    otherDonate () {
+      this.other_donate = true
+    },
+    noOtherDonate () {
+      this.other_donate = false
+    },
     async submitSurvey (valid) {
       try {
         const isValid = await this.$refs.stepSeven.validate()
