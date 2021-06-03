@@ -33,7 +33,7 @@
                     *I would like to donate
                   </p>
                   <div class="radio-box-con mb-4 d-flex justify-content-md-start justify-content-sm-center">
-                    <div v-for="donate in donations" :key="donate.value" class="radio-box" @click="noOtherDonate">
+                    <div v-for="donate in donations" :key="donate.value" class="radio-box" @click="doDonate">
                       <input class="input-radio" type="radio" v-model="answer_step7.donation.donation_amount" name="donate_radio" :value="donate.value">
                       <label for="">{{ donate.label }}</label>
                     </div>
@@ -42,7 +42,7 @@
                       <input type="radio" class="input-radio" v-model="answer_step7.donation.donation_amount" name="other_donate" id="other_donate">
                       <label for="">Other</label>
                     </div>
-                    <div class="radio-box" v-if="answer_step7.donation.donation_amount" @click="noOtherDonate">
+                    <div class="radio-box" v-if="otherBtn" @click="noOtherDonate">
                       <!-- dont want to donate -->
                       <input type="radio" class="input-radio" v-model="answer_step7.donation.donation_amount" :value="0" name="dont_donate" id="dont_donate">
                       <label for="">I don't want to Donate</label>
@@ -50,7 +50,7 @@
                   </div>
                 </div>
               </div>
-              <div v-if="other_donate" class="row mt-3">
+              <div v-if="otherBtn" class="row mt-3">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label>Other Amount</label>
@@ -58,7 +58,7 @@
                   </div>
                 </div>
               </div>
-              <template v-if="answer_step7.donation.donation_amount">
+              <template v-if="other_donate">
                 <div class="row mt-3">
                   <div class="col-md-6">
                     <div class="form-group">
@@ -262,6 +262,7 @@ export default {
       ck: '',
       submitLoading: null,
       startDate: null,
+      otherBtn: false,
       answer_step7: {
         Final_Comments: '',
         donation: {
@@ -294,11 +295,17 @@ export default {
     })
   },
   methods: {
+    doDonate () {
+      this.other_donate = true
+      this.otherBtn = false
+    },
     otherDonate () {
       this.other_donate = true
+      this.otherBtn = true
     },
     noOtherDonate () {
       this.other_donate = false
+      this.otherBtn = false
     },
     async submitSurvey (valid) {
       try {
